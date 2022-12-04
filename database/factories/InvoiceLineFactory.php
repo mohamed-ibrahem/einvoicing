@@ -53,9 +53,9 @@ class InvoiceLineFactory extends Factory
                 'taxableItems' => [
                     [
                         'taxType' => 'T1',
-                        'amount' => fake()->randomNumber(),
+                        'amount' => 490,
                         'subType' => 'V001',
-                        'rate' => fake()->randomNumber(),
+                        'rate' => 14,
                     ]
                 ],
                 'internalCode' => fake()->randomNumber(),
