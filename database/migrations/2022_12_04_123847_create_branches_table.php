@@ -18,8 +18,6 @@ return new class extends Migration
             $table->string('name');
             $table->string('type', 1)->nullable();
             $table->string('activity_code')->nullable();
-            $table->string('client_id')->nullable();
-            $table->string('client_secret')->nullable();
             $table->string('country', 2)->nullable();
             $table->string('region_city')->nullable();
             $table->string('governate')->nullable();
