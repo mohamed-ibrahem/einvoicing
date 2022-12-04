@@ -14,7 +14,6 @@ class User extends Authenticatable
 {
     use HasFactory;
     use Notifiable;
-    use BelongsToBranch;
     use HasBranches;
 
     /**
@@ -56,15 +55,5 @@ class User extends Authenticatable
     protected static function newFactory(): UserFactory
     {
         return new UserFactory();
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @return string
-     */
-    public static function getTenantKeyName(): string
-    {
-        return 'current_branch_id';
     }
 }
