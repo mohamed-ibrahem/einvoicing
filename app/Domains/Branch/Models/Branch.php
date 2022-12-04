@@ -17,7 +17,7 @@ class Branch extends Model
      *
      * @var array<string>
      */
-    protected  $fillable = [
+    protected $fillable = [
         'name',
         'type',
         'activity_code',
