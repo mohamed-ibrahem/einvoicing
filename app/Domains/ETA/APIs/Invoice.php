@@ -45,19 +45,19 @@ class Invoice extends Api
             $invoice->created_at->toDateTimeLocalString(),
             $invoice->branch->activity_code,
             $invoice->uuid,
-            $invoice->data('totalDiscountAmount'),
-            $invoice->data('totalSalesAmount'),
-            $invoice->data('netAmount'),
+            $invoice->getData('totalDiscountAmount'),
+            $invoice->getData('totalSalesAmount'),
+            $invoice->getData('netAmount'),
             $this->getTaxTotals($invoice),
-            $invoice->data('totalAmount'),
-            $invoice->data('extraDiscountAmount'),
-            $invoice->data('totalItemsDiscountAmount'),
+            $invoice->getData('totalAmount'),
+            $invoice->getData('extraDiscountAmount'),
+            $invoice->getData('totalItemsDiscountAmount'),
             $this->getInvoiceLines($invoice),
-            $invoice->data('purchaseOrderReference'),
-            $invoice->data('purchaseOrderDescription'),
-            $invoice->data('salesOrderReference'),
-            $invoice->data('salesOrderDescription'),
-            $invoice->data('proformaInvoiceNumber'),
+            $invoice->getData('purchaseOrderReference'),
+            $invoice->getData('purchaseOrderDescription'),
+            $invoice->getData('salesOrderReference'),
+            $invoice->getData('salesOrderDescription'),
+            $invoice->getData('proformaInvoiceNumber'),
             $this->getPayment($invoice),
             $this->getDelivery($invoice),
         );
@@ -96,21 +96,21 @@ class Invoice extends Api
     private function getReceiver(InvoiceModel $invoice): DTO\Receiver
     {
         return new DTO\Receiver(
-            $invoice->data('customer.id'),
-            $invoice->data('customer.name'),
-            $invoice->data('customer.type', 'B'),
+            $invoice->getData('customer.id'),
+            $invoice->getData('customer.name'),
+            $invoice->getData('customer.type', 'B'),
             new DTO\Address(
-                $invoice->data('customer.address.country'),
-                $invoice->data('customer.address.regionCity'),
-                $invoice->data('customer.address.governate'),
-                $invoice->data('customer.address.street'),
-                $invoice->data('customer.address.buildingNumber'),
+                $invoice->getData('customer.address.country'),
+                $invoice->getData('customer.address.regionCity'),
+                $invoice->getData('customer.address.governate'),
+                $invoice->getData('customer.address.street'),
+                $invoice->getData('customer.address.buildingNumber'),
                 null,
-                $invoice->data('customer.address.postalCode'),
-                $invoice->data('customer.address.floor'),
-                $invoice->data('customer.address.room'),
-                $invoice->data('customer.address.landmark'),
-                $invoice->data('customer.address.additionalInformation'),
+                $invoice->getData('customer.address.postalCode'),
+                $invoice->getData('customer.address.floor'),
+                $invoice->getData('customer.address.room'),
+                $invoice->getData('customer.address.landmark'),
+                $invoice->getData('customer.address.additionalInformation'),
             ),
         );
     }
@@ -123,34 +123,34 @@ class Invoice extends Api
     {
         return $invoice->invoiceLines->map(
             fn (InvoiceLine $model) => new DTO\InvoiceLine(
-                $model->data('description'),
-                $model->data('itemType'),
-                $model->data('itemCode'),
-                $model->data('unitType'),
-                $model->data('quantity'),
+                $model->getData('description'),
+                $model->getData('itemType'),
+                $model->getData('itemCode'),
+                $model->getData('unitType'),
+                $model->getData('quantity'),
                 new DTO\Value(
-                    $model->data('unitValue.currencySold'),
-                    $model->data('unitValue.amountEGP'),
-                    $model->data('unitValue.amountSold'),
-                    $model->data('unitValue.currencyExchangeRate'),
+                    $model->getData('unitValue.currencySold'),
+                    $model->getData('unitValue.amountEGP'),
+                    $model->getData('unitValue.amountSold'),
+                    $model->getData('unitValue.currencyExchangeRate'),
                 ),
-                $model->data('salesTotal'),
-                $model->data('total'),
-                $model->data('valueDifference'),
-                $model->data('totalTaxableFees'),
-                $model->data('netTotal'),
-                $model->data('itemsDiscount'),
+                $model->getData('salesTotal'),
+                $model->getData('total'),
+                $model->getData('valueDifference'),
+                $model->getData('totalTaxableFees'),
+                $model->getData('netTotal'),
+                $model->getData('itemsDiscount'),
                 new DTO\Discount(
-                    $model->data('discount.rate'),
-                    $model->data('discount.amount'),
+                    $model->getData('discount.rate'),
+                    $model->getData('discount.amount'),
                 ),
                 array_map(static fn ($tax) => new DTO\TaxableItem(
                     $tax['taxType'],
                     $tax['amount'],
                     $tax['subType'],
                     $tax['rate'],
-                ), $model->data('taxableItems')),
-                $model->data('internalCode'),
+                ), $model->getData('taxableItems')),
+                $model->getData('internalCode'),
             )
         )->toArray();
     }
@@ -166,12 +166,12 @@ class Invoice extends Api
         }
 
         return new DTO\Payment(
-            $invoice->data('payment.bankName'),
-            $invoice->data('payment.bankAddress'),
-            $invoice->data('payment.bankAccountNo'),
-            $invoice->data('payment.bankAccountIBAN'),
-            $invoice->data('payment.swiftCode'),
-            $invoice->data('payment.terms'),
+            $invoice->getData('payment.bankName'),
+            $invoice->getData('payment.bankAddress'),
+            $invoice->getData('payment.bankAccountNo'),
+            $invoice->getData('payment.bankAccountIBAN'),
+            $invoice->getData('payment.swiftCode'),
+            $invoice->getData('payment.terms'),
         );
     }
 
@@ -186,14 +186,14 @@ class Invoice extends Api
         }
 
         return new DTO\Delivery(
-            $invoice->data('delivery.approach'),
-            $invoice->data('delivery.packaging'),
-            Carbon::parse($invoice->data('delivery.dateValidity'))->toDateTimeLocalString(),
-            $invoice->data('delivery.exportPort'),
-            $invoice->data('delivery.countryOfOrigin'),
-            $invoice->data('delivery.grossWeight'),
-            $invoice->data('delivery.netWeight'),
-            $invoice->data('delivery.terms'),
+            $invoice->getData('delivery.approach'),
+            $invoice->getData('delivery.packaging'),
+            Carbon::parse($invoice->getData('delivery.dateValidity'))->toDateTimeLocalString(),
+            $invoice->getData('delivery.exportPort'),
+            $invoice->getData('delivery.countryOfOrigin'),
+            $invoice->getData('delivery.grossWeight'),
+            $invoice->getData('delivery.netWeight'),
+            $invoice->getData('delivery.terms'),
         );
     }
 
@@ -205,7 +205,7 @@ class Invoice extends Api
     {
         return array_map(
             static fn ($amount) => new DTO\TaxTotal('CIT', $amount),
-            $invoice->data('taxTotals')
+            $invoice->getData('taxTotals')
         );
     }
 }

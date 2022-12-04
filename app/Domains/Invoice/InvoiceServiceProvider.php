@@ -2,9 +2,14 @@
 
 namespace App\Domains\Invoice;
 
-use Illuminate\Support\ServiceProvider;
+use App\Domains\Invoice\Filament\InvoiceResource;
+use Filament\PluginServiceProvider;
 
-class InvoiceServiceProvider extends ServiceProvider
+class InvoiceServiceProvider extends PluginServiceProvider
 {
-    //
+    public static string $name = 'invoice_domain';
+
+    protected array $resources = [
+        InvoiceResource::class,
+    ];
 }

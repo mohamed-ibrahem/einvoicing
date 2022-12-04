@@ -2,11 +2,16 @@
 
 namespace App\Domains\Branch\Models;
 
+use App\Domains\ETA\Models\ActivityCodes;
+use App\Domains\ETA\Models\CountryCodes;
+use App\Domains\Invoice\Models\Invoice;
 use App\Domains\User\Models\User;
 use Database\Factories\BranchFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Branch extends Model
 {
@@ -21,8 +26,6 @@ class Branch extends Model
         'name',
         'type',
         'activity_code',
-        'client_id',
-        'client_secret',
         'country',
         'region_city',
         'governate',
@@ -55,5 +58,25 @@ class Branch extends Model
         return $this->belongsToMany(User::class, Membership::class)
             ->withTimestamps()
             ->as('membership');
+    }
+
+    /**
+     * Get all the branch invoices.
+     *
+     * @return HasMany
+     */
+    public function invoices(): HasMany
+    {
+        return $this->hasMany(Invoice::class);
+    }
+
+    public function country_relation(): BelongsTo
+    {
+        return $this->belongsTo(CountryCodes::class, 'country', 'code');
+    }
+
+    public function activity_code_relation(): BelongsTo
+    {
+        return $this->belongsTo(ActivityCodes::class, 'activity_code', 'code');
     }
 }

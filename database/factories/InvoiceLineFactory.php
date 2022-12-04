@@ -27,7 +27,7 @@ class InvoiceLineFactory extends Factory
     {
         return [
             'uuid' => fake()->uuid(),
-            'data' => [
+            'getData' => [
                 'description' => fake()->sentence(),
                 'itemType' => 'GS1',
                 'itemCode' => 10003752,
