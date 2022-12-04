@@ -196,6 +196,7 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         App\Domains\User\UserServiceProvider::class,
+        App\Domains\Branch\BranchServiceProvider::class,
     ],
 
     /*
