@@ -14,7 +14,7 @@ trait BelongsToBranches
      *
      * @return void
      */
-    public static function bootBelognsToBranches(): void
+    public static function bootBelongsToBranches(): void
     {
         static::addGlobalScope(new BelongsToBranch());
 

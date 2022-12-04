@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Domains\Branch\Models\Branch;
 use App\Domains\User\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Model;
@@ -45,5 +46,18 @@ class UserFactory extends Factory
         return $this->state(fn(array $attributes) => [
             'email_verified_at' => null,
         ]);
+    }
+
+    /**
+     * Indicate that the user should have a personal team.
+     *
+     * @return static
+     */
+    public function withDefaultBranch(): static
+    {
+        return $this->has(
+            Branch::factory(),
+            'branches'
+        );
     }
 }

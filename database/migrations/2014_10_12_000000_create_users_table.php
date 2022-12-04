@@ -19,7 +19,7 @@ return new class extends Migration {
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->foreignIdFor(Branch::class, 'current_branch_id');
+            $table->foreignIdFor(Branch::class, 'current_branch_id')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
