@@ -78,7 +78,7 @@ trait HasBranches
             return false;
         }
 
-        return $this->branchs->contains(fn($t) => $t->id === $branch->id);
+        return $this->branches->contains(fn($t) => $t->id === $branch->id);
     }
 
     /**
