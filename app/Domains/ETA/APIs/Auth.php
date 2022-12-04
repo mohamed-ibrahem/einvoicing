@@ -18,18 +18,17 @@ class Auth extends Api
     /**
      * Login given client id and secret.
      *
-     * @param  Branch  $branch
      * @return DTO\Auth
      *
      * @throws BadRequestException
      */
-    public function login(Branch $branch): DTO\Auth
+    public function login(): DTO\Auth
     {
         $response = $this->asForm()
             ->post('/connect/token', [
                 'grant_type' => 'client_credentials',
-                'client_id' => $branch->client_id,
-                'client_secret' => $branch->client_secret,
+                'client_id' => config('services.eta.client_id'),
+                'client_secret' => config('services.eta.client_secret'),
                 'scope' => '',
             ]);
 

@@ -19,6 +19,6 @@ class InvoiceTest extends TestCase
             ->has(InvoiceLine::factory(2))
             ->create();
 
-
+        app(Invoice::class)->submit($invoice);
     }
 }

@@ -4,6 +4,7 @@ namespace App\Domains\Invoice\Filament;
 
 use App\Domains\ETA\Models\CountryCodes;
 use App\Domains\ETA\Models\TaxTypes;
+use App\Domains\Invoice\Filament\InvoiceResource\Actions\SubmitInvoice;
 use App\Domains\Invoice\Filament\InvoiceResource\Pages;
 use App\Domains\Invoice\Filament\InvoiceResource\RelationManagers\InvoiceLinesRelationManager;
 use App\Domains\Invoice\Models\Invoice;
@@ -188,6 +189,10 @@ class InvoiceResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->prependActions([
+                SubmitInvoice::make('submit')
+                    ->hidden(fn (Invoice $invoice) => (bool) $invoice->getData('status', false, 'response'))
+            ])
             ->columns([
                 TextColumn::make('data.id')
                     ->label('#')

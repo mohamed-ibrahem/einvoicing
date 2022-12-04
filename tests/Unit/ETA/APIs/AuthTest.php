@@ -18,9 +18,7 @@ class AuthTest extends TestCase
             '/connect/token' => fn () => AuthResponses::successResponse(),
         ]);
 
-        $auth = app(Auth::class)->login(
-            Branch::factory()->create()
-        );
+        $auth = app(Auth::class)->login();
 
         $this->assertEquals('token', $auth->token);
         $this->assertEquals('Bearer', $auth->tokenType);
@@ -37,8 +35,6 @@ class AuthTest extends TestCase
 
         $this->expectExceptionMessage('error message');
 
-        app(Auth::class)->login(
-            Branch::factory()->create()
-        );
+        app(Auth::class)->login();
     }
 }

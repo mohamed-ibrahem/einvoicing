@@ -27,7 +27,7 @@ class InvoiceFactory extends Factory
     {
         return [
             'uuid' => fake()->unique()->uuid(),
-            'getData' => [
+            'data' => [
                 'totalDiscountAmount' => fake()->randomNumber(),
                 'totalSalesAmount' => fake()->randomNumber(),
                 'netAmount' => fake()->randomNumber(),

@@ -18,7 +18,7 @@ class Invoice extends Api
      */
     public function submit(InvoiceModel $invoice): void
     {
-        $auth = app(Auth::class)->login($invoice->branch);
+        $auth = app(Auth::class)->login();
 
         $document = $this->getInvoice($invoice);
 
