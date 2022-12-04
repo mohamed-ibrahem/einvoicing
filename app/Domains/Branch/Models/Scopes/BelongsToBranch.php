@@ -16,13 +16,13 @@ class BelongsToBranch implements Scope
      */
     public function apply(Builder $builder, Model $model): void
     {
-        if (! method_exists($model, 'getBranchKeyName')) {
-            throw new InvalidArgumentException('Please use the BelongsToBranch trait or add getBranchKeyName() method');
+        if (! method_exists($model, 'getTenantKeyName')) {
+            throw new InvalidArgumentException('Please use the BelongsToBranch trait or add getTenantKeyName() method');
         }
 
         if (auth()->check()) {
             $builder->where(
-                $model->qualifyColumn($model::getBranchKeyName()),
+                $model->qualifyColumn($model::getTenantKeyName()),
                 auth()->user()->current_branch_id,
             );
         }
