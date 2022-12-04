@@ -3,7 +3,11 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Domains\Branch\Models\Branch;
+use App\Domains\Invoice\Models\Invoice;
+use App\Domains\User\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -14,11 +18,22 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
+         $user = User::factory()->create([
+             'name' => 'Test User',
+             'email' => 'test@example.com',
+             'password' => Hash::make('123456789')
+         ]);
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+         $user->branches()->saveMany(
+             Branch::factory(10)
+                 ->hasUsers((int) range(0, 5))
+                 ->create()
+         );
+
+         Branch::each(static fn (Branch $branch) => Invoice::factory()
+             ->hasInvoiceLines((int) range(1, 5))
+             ->create([
+             'branch_id' => $branch->id,
+         ]));
     }
 }
