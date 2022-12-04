@@ -9,7 +9,6 @@ use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
@@ -53,5 +52,14 @@ class User extends Authenticatable
     protected static function newFactory(): UserFactory
     {
         return new UserFactory();
+    }
+
+    /**
+     * @inheritDoc
+     * @return string
+     */
+    public static function getTenantKeyName(): string
+    {
+        return 'current_branch_id';
     }
 }
