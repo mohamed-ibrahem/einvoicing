@@ -10,12 +10,13 @@ use InvalidArgumentException;
 class BelongsToBranch implements Scope
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
+     *
      * @return void
      */
     public function apply(Builder $builder, Model $model): void
     {
-        if (!method_exists($model, 'getBranchKeyName')) {
+        if (! method_exists($model, 'getBranchKeyName')) {
             throw new InvalidArgumentException('Please use the BelongsToBranch trait or add getBranchKeyName() method');
         }
 
@@ -30,7 +31,7 @@ class BelongsToBranch implements Scope
     /**
      * Extend query builder functionality.
      *
-     * @param Builder $builder
+     * @param  Builder  $builder
      * @return void
      */
     public function extend(Builder $builder): void

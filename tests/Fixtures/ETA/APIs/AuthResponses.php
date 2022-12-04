@@ -25,7 +25,7 @@ class AuthResponses
     /**
      * Mock the ETA failed exception.
      *
-     * @param string $error
+     * @param  string  $error
      * @return PromiseInterface
      */
     public static function failedWithError(string $error): PromiseInterface

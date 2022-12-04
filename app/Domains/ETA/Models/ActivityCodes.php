@@ -175,7 +175,7 @@ class ActivityCodes extends Model
         [
             'code' => '0220',
             'desc_en' => 'Wood cutting',
-            'desc_ar' => 'قطع الاخشاب'
+            'desc_ar' => 'قطع الاخشاب',
         ],
         [
             'code' => '0230',
@@ -190,7 +190,7 @@ class ActivityCodes extends Model
         [
             'code' => '0311',
             'desc_en' => 'Fishing',
-            'desc_ar' => 'الصيد البحرى'
+            'desc_ar' => 'الصيد البحرى',
         ],
         [
             'code' => '0312',
@@ -210,7 +210,7 @@ class ActivityCodes extends Model
         [
             'code' => '0411',
             'desc_en' => 'Earn a job',
-            'desc_ar' => 'كسب عمل'
+            'desc_ar' => 'كسب عمل',
         ],
         [
             'code' => '0412',
@@ -435,7 +435,7 @@ class ActivityCodes extends Model
         [
             'code' => '1102',
             'desc_en' => 'Winemaking',
-            'desc_ar' => 'صناعة النبيذ'
+            'desc_ar' => 'صناعة النبيذ',
         ],
         [
             'code' => '1103',
@@ -565,7 +565,7 @@ class ActivityCodes extends Model
         [
             'code' => '1811',
             'desc_en' => 'printing',
-            'desc_ar' => 'الطباعة'
+            'desc_ar' => 'الطباعة',
         ],
         [
             'code' => '1812',
@@ -955,7 +955,7 @@ class ActivityCodes extends Model
         [
             'code' => '3091',
             'desc_en' => 'Industry',
-            'desc_ar' => 'صناعة'
+            'desc_ar' => 'صناعة',
         ],
         [
             'code' => '3092',
@@ -1065,7 +1065,7 @@ class ActivityCodes extends Model
         [
             'code' => '3700',
             'desc_en' => 'Sewer',
-            'desc_ar' => 'المجارى'
+            'desc_ar' => 'المجارى',
         ],
         [
             'code' => '3811',
@@ -1760,7 +1760,7 @@ class ActivityCodes extends Model
         [
             'code' => '7310',
             'desc_en' => 'Advertising',
-            'desc_ar' => 'الاعلان'
+            'desc_ar' => 'الاعلان',
         ],
         [
             'code' => '7320',

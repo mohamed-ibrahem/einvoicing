@@ -28,10 +28,10 @@ class InvoiceResponses
                                 'propertyPath' => '#/invoiceLines[0]',
                                 'details' => null,
                             ],
-                        ]
-                    ]
-                ]
-            ]
+                        ],
+                    ],
+                ],
+            ],
         ]);
     }
 }

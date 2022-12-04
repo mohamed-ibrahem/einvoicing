@@ -15,7 +15,7 @@ class AuthTest extends TestCase
     public function it_can_handle_the_request(): void
     {
         Http::fake([
-            '/connect/token' => fn() => AuthResponses::successResponse()
+            '/connect/token' => fn () => AuthResponses::successResponse(),
         ]);
 
         $auth = app(Auth::class)->login(
@@ -32,15 +32,13 @@ class AuthTest extends TestCase
     public function it_throw_error_when_client_is_invalid(): void
     {
         Http::fake([
-            '/connect/token' => fn() => AuthResponses::failedWithError('error message')
+            '/connect/token' => fn () => AuthResponses::failedWithError('error message'),
         ]);
 
         $this->expectExceptionMessage('error message');
 
         app(Auth::class)->login(
-            Branch::factory()->create([
-                'data' => [],
-            ])
+            Branch::factory()->create()
         );
     }
 }

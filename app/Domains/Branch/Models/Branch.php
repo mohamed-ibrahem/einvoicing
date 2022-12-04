@@ -32,11 +32,12 @@ class Branch extends Model
         'floor',
         'room',
         'landmark',
-        'address_additional_information'
+        'address_additional_information',
     ];
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
+     *
      * @return BranchFactory
      */
     protected static function newFactory(): BranchFactory

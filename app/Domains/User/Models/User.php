@@ -49,7 +49,8 @@ class User extends Authenticatable
     ];
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
+     *
      * @return UserFactory
      */
     protected static function newFactory(): UserFactory
@@ -58,7 +59,8 @@ class User extends Authenticatable
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
+     *
      * @return string
      */
     public static function getTenantKeyName(): string

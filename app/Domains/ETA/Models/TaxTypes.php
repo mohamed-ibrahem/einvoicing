@@ -518,7 +518,7 @@ class TaxTypes extends Model
     /**
      * Determine that the type is taxable.
      *
-     * @param bool|null $isTaxable
+     * @param  bool|null  $isTaxable
      * @return bool
      */
     public function getIsTaxableAttribute(?bool $isTaxable): bool

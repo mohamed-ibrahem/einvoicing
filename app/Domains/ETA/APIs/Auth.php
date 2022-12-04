@@ -18,8 +18,9 @@ class Auth extends Api
     /**
      * Login given client id and secret.
      *
-     * @param Branch $branch
+     * @param  Branch  $branch
      * @return DTO\Auth
+     *
      * @throws BadRequestException
      */
     public function login(Branch $branch): DTO\Auth

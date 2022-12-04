@@ -19,7 +19,7 @@ trait BelongsToBranch
         static::addGlobalScope(new BelongsToBranchScope());
 
         static::creating(static function (Model $model) {
-            if (!$model->relationLoaded('branch') && !$model->getAttribute(self::getTenantKeyName())) {
+            if (! $model->relationLoaded('branch') && ! $model->getAttribute(self::getTenantKeyName())) {
                 $model->setAttribute(self::getTenantKeyName(), auth()->user()?->current_branch_id);
                 $model->setRelation('branch', auth()->user()?->currentBranch());
             }

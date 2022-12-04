@@ -20,7 +20,8 @@ class BranchFactory extends Factory
     protected $model = Branch::class;
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
+     *
      * @return array
      */
     public function definition(): array

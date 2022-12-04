@@ -2,17 +2,18 @@
 
 namespace App\Domains\ETA\APIs;
 
-use App\Domains\Invoice\Models\Invoice as InvoiceModel;
-use App\Domains\Invoice\Models\InvoiceLine;
 use App\Domains\ETA\DTO;
 use App\Domains\ETA\Exceptions\BadRequestException;
+use App\Domains\Invoice\Models\Invoice as InvoiceModel;
+use App\Domains\Invoice\Models\InvoiceLine;
 use Illuminate\Support\Carbon;
 
 class Invoice extends Api
 {
     /**
-     * @param InvoiceModel $invoice
+     * @param  InvoiceModel  $invoice
      * @return void
+     *
      * @throws BadRequestException
      */
     public function submit(InvoiceModel $invoice): void
@@ -25,15 +26,15 @@ class Invoice extends Api
             ->withToken($auth->token, $auth->tokenType)
             ->post('/documentsubmissions', [
                 'documents' => [
-                    $document
-                ]
+                    $document,
+                ],
             ]);
 
         dd($response);
     }
 
     /**
-     * @param InvoiceModel $invoice
+     * @param  InvoiceModel  $invoice
      * @return DTO\Invoice
      */
     private function getInvoice(InvoiceModel $invoice): DTO\Invoice
@@ -63,7 +64,7 @@ class Invoice extends Api
     }
 
     /**
-     * @param InvoiceModel $invoice
+     * @param  InvoiceModel  $invoice
      * @return DTO\Issuer
      */
     private function getIssuer(InvoiceModel $invoice): DTO\Issuer
@@ -89,7 +90,7 @@ class Invoice extends Api
     }
 
     /**
-     * @param InvoiceModel $invoice
+     * @param  InvoiceModel  $invoice
      * @return DTO\Receiver
      */
     private function getReceiver(InvoiceModel $invoice): DTO\Receiver
@@ -115,13 +116,13 @@ class Invoice extends Api
     }
 
     /**
-     * @param InvoiceModel $invoice
+     * @param  InvoiceModel  $invoice
      * @return DTO\InvoiceLine[]
      */
     private function getInvoiceLines(InvoiceModel $invoice): array
     {
         return $invoice->invoiceLines->map(
-            fn(InvoiceLine $model) => new DTO\InvoiceLine(
+            fn (InvoiceLine $model) => new DTO\InvoiceLine(
                 $model->data('description'),
                 $model->data('itemType'),
                 $model->data('itemCode'),
@@ -143,7 +144,7 @@ class Invoice extends Api
                     $model->data('discount.rate'),
                     $model->data('discount.amount'),
                 ),
-                array_map(static fn($tax) => new DTO\TaxableItem(
+                array_map(static fn ($tax) => new DTO\TaxableItem(
                     $tax['taxType'],
                     $tax['amount'],
                     $tax['subType'],
@@ -155,12 +156,12 @@ class Invoice extends Api
     }
 
     /**
-     * @param InvoiceModel $invoice
+     * @param  InvoiceModel  $invoice
      * @return DTO\Payment|null
      */
     private function getPayment(InvoiceModel $invoice): ?DTO\Payment
     {
-        if (!$invoice->data->has('payment')) {
+        if (! $invoice->data->has('payment')) {
             return null;
         }
 
@@ -175,12 +176,12 @@ class Invoice extends Api
     }
 
     /**
-     * @param InvoiceModel $invoice
+     * @param  InvoiceModel  $invoice
      * @return DTO\Delivery|null
      */
     private function getDelivery(InvoiceModel $invoice): ?DTO\Delivery
     {
-        if (!$invoice->data->has('delivery')) {
+        if (! $invoice->data->has('delivery')) {
             return null;
         }
 
@@ -197,13 +198,13 @@ class Invoice extends Api
     }
 
     /**
-     * @param InvoiceModel $invoice
+     * @param  InvoiceModel  $invoice
      * @return DTO\TaxTotal[]
      */
     private function getTaxTotals(InvoiceModel $invoice): array
     {
         return array_map(
-            static fn($amount) => new DTO\TaxTotal('CIT', $amount),
+            static fn ($amount) => new DTO\TaxTotal('CIT', $amount),
             $invoice->data('taxTotals')
         );
     }

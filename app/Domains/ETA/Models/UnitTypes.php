@@ -516,6 +516,6 @@ class UnitTypes extends Model
             'code' => 'YRD',
             'desc_en' => 'Yards ( yd )',
             'desc_ar' => '',
-        ]
+        ],
     ];
 }

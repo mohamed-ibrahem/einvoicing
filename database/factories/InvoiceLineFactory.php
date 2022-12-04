@@ -2,7 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Domains\Branch\Models\Branch;
 use App\Domains\Invoice\Models\Invoice;
 use App\Domains\Invoice\Models\InvoiceLine;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -20,7 +19,7 @@ class InvoiceLineFactory extends Factory
     protected $model = InvoiceLine::class;
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      *
      * @return array<string, mixed>
      */
@@ -56,7 +55,7 @@ class InvoiceLineFactory extends Factory
                         'amount' => 490,
                         'subType' => 'V001',
                         'rate' => 14,
-                    ]
+                    ],
                 ],
                 'internalCode' => fake()->randomNumber(),
             ],
