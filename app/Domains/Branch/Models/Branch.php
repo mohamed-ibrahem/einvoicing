@@ -37,7 +37,6 @@ class Branch extends Model
 
     /**
      * @inheritDoc
-     *
      * @return BranchFactory
      */
     protected static function newFactory(): BranchFactory

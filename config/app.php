@@ -197,6 +197,7 @@ return [
 
         App\Domains\User\UserServiceProvider::class,
         App\Domains\Branch\BranchServiceProvider::class,
+        App\Domains\Invoice\InvoiceServiceProvider::class,
     ],
 
     /*

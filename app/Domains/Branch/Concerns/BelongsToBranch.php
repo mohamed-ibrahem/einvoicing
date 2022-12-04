@@ -3,20 +3,20 @@
 namespace App\Domains\Branch\Concerns;
 
 use App\Domains\Branch\Models\Branch;
-use App\Domains\Branch\Models\Scopes\BelongsToBranch;
+use App\Domains\Branch\Models\Scopes\BelongsToBranch as BelongsToBranchScope;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-trait BelongsToBranches
+trait BelongsToBranch
 {
     /**
      * When the trait is booting.
      *
      * @return void
      */
-    public static function bootBelongsToBranches(): void
+    public static function bootBelongsToBranch(): void
     {
-        static::addGlobalScope(new BelongsToBranch());
+        static::addGlobalScope(new BelongsToBranchScope());
 
         static::creating(static function (Model $model) {
             if (!$model->relationLoaded('branch') && !$model->getAttribute(self::getTenantKeyName())) {

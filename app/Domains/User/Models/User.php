@@ -3,7 +3,7 @@
 namespace App\Domains\User\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use App\Domains\Branch\Concerns\BelongsToBranches;
+use App\Domains\Branch\Concerns\BelongsToBranch;
 use App\Domains\Branch\Concerns\HasBranches;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -12,7 +12,10 @@ use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable, BelongsToBranches, HasBranches;
+    use HasFactory;
+    use Notifiable;
+    use BelongsToBranch;
+    use HasBranches;
 
     /**
      * The attributes that are mass assignable.
