@@ -2,16 +2,21 @@
 
 namespace App\Domains\Branch\Filament;
 
+use App\Domains\Base\Filament\Fields\ActivityCodes;
+use App\Domains\Base\Filament\Fields\Countries;
 use App\Domains\Branch\Filament\BranchResource\Pages;
 use App\Domains\Branch\Models\Branch;
-use App\Domains\ETA\Models\ActivityCodes;
-use App\Domains\ETA\Models\CountryCodes;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
+use Filament\Tables\Actions\ActionGroup;
+use Filament\Tables\Actions\DeleteAction;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -28,54 +33,69 @@ class BranchResource extends Resource
         return $form
             ->schema([
                 TextInput::make('name')
+                    ->translateLabel()
                     ->required(),
 
                 Select::make('type')
-                        ->required()
+                    ->translateLabel()
+                    ->required()
                     ->options([
                         'B' => 'Business in Egypt (B)',
                         'P' => 'Natural person (P)',
                         'F' => 'Foreigner (F)'
                     ]),
 
-                Select::make('activity_code')
-                        ->required()
-                    ->searchable()
-                    ->relationship('activity_code_relation', 'code')
-                    ->getSearchResultsUsing(fn(string $search) => ActivityCodes::search($search)->limit(5)->get()->pluck('description', 'id'))
-                    ->getOptionLabelFromRecordUsing(fn(ActivityCodes $record): ?string => $record->description),
+                ActivityCodes::make('activity_code')
+                    ->translateLabel()
+                    ->required(),
 
                 Section::make('Address information')
                     ->collapsible()
                     ->schema([
-                        Select::make('country')
-                                ->required()
-                            ->searchable()
-                            ->relationship('country_relation', 'code')
-                            ->getSearchResultsUsing(fn(string $search) => CountryCodes::search($search)->limit(5)->get()->pluck('description', 'id'))
-                            ->getOptionLabelFromRecordUsing(fn(CountryCodes $record): ?string => $record->description),
+                        Countries::make('country')
+                            ->translateLabel()
+                            ->required(),
 
                         TextInput::make('region_city')
+                            ->translateLabel()
                             ->required(),
 
                         TextInput::make('governate')
+                            ->translateLabel()
                             ->required(),
 
                         TextInput::make('street')
+                            ->translateLabel()
                             ->required(),
 
                         TextInput::make('building_number')
+                            ->translateLabel()
+                            ->maxLength(10)
                             ->required(),
 
-                        TextInput::make('postal_code'),
+                        TextInput::make('postal_code')
+                            ->translateLabel()
+                            ->nullable()
+                            ->maxLength(10),
 
-                        TextInput::make('floor'),
+                        TextInput::make('floor')
+                            ->translateLabel()
+                            ->nullable()
+                            ->maxLength(10),
 
-                        TextInput::make('room'),
+                        TextInput::make('room')
+                            ->translateLabel()
+                            ->nullable()
+                            ->maxLength(10),
 
-                        TextInput::make('landmark'),
+                        TextInput::make('landmark')
+                            ->translateLabel()
+                            ->nullable()
+                            ->maxLength(10),
 
-                        TextInput::make('address_additional_information'),
+                        Textarea::make('address_additional_information')
+                            ->translateLabel()
+                            ->nullable(),
                     ]),
             ]);
     }
@@ -83,12 +103,22 @@ class BranchResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->bulkActions([])
+            ->actions([
+                ActionGroup::make([
+                    ViewAction::make(),
+                    EditAction::make(),
+                    DeleteAction::make(),
+                ])
+            ])
             ->columns([
                 TextColumn::make('name')
+                    ->translateLabel()
                     ->searchable()
                     ->sortable(),
 
                 TextColumn::make('type')
+                    ->translateLabel()
                     ->formatStateUsing(fn(Branch $record) => [
                         'B' => 'Business in Egypt (B)',
                         'P' => 'Natural person (P)',
@@ -97,11 +127,14 @@ class BranchResource extends Resource
                     ->sortable()
                     ->searchable(),
 
-                TextColumn::make('activity_code_relation.description'),
+                TextColumn::make('activity_code_relation.description')
+                    ->translateLabel(),
 
-                TextColumn::make('country_relation.description'),
+                TextColumn::make('country_relation.description')
+                    ->translateLabel(),
 
                 TextColumn::make('region_city')
+                    ->translateLabel()
                     ->searchable(),
             ]);
     }
@@ -116,6 +149,7 @@ class BranchResource extends Resource
         return [
             'index' => Pages\ListBranches::route('/'),
             'create' => Pages\CreateBranch::route('/create'),
+            'view' => Pages\ViewBranch::route('/{record}'),
             'edit' => Pages\EditBranch::route('/{record}/edit'),
         ];
     }

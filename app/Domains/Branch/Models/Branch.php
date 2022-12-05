@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Http;
 
 class Branch extends Model
 {
@@ -48,6 +49,11 @@ class Branch extends Model
         return new BranchFactory();
     }
 
+    public static function checkIfTheUserCanCreateBranches(User $user): bool
+    {
+        return true;
+    }
+
     /**
      * Get all the users belongs to this branch.
      *
@@ -70,11 +76,21 @@ class Branch extends Model
         return $this->hasMany(Invoice::class);
     }
 
+    /**
+     * Get branch country.
+     *
+     * @return BelongsTo
+     */
     public function country_relation(): BelongsTo
     {
         return $this->belongsTo(CountryCodes::class, 'country', 'code');
     }
 
+    /**
+     * Get activity code.
+     *
+     * @return BelongsTo
+     */
     public function activity_code_relation(): BelongsTo
     {
         return $this->belongsTo(ActivityCodes::class, 'activity_code', 'code');

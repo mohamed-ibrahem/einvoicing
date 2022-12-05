@@ -14,6 +14,10 @@ class ActivityCodes extends Select
 
         $this->searchable();
 
+        $this->options(
+            ActivityCodesModel::all()->pluck('description', 'code')
+        );
+
         $this->getSearchResultsUsing(
             fn(string $search) => ActivityCodesModel::search($search)->limit(5)->get()->pluck('description', 'code')
         );
