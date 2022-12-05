@@ -36,7 +36,7 @@ trait BelongsToBranch
         return $this->belongsTo(
             Branch::class,
             self::getTenantKeyName()
-        )->withoutGlobalScope(BelongsToBranchScope::class);
+        );
     }
 
     /**

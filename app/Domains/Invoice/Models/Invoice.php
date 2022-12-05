@@ -4,11 +4,10 @@ namespace App\Domains\Invoice\Models;
 
 use App\Domains\Base\Models\Concerncs\HasDataObject;
 use App\Domains\Branch\Concerns\BelongsToBranch;
-use App\Domains\ETA\Models\CountryCodes;
 use Database\Factories\InvoiceFactory;
+use Exception;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Invoice extends Model
@@ -56,13 +55,38 @@ class Invoice extends Model
         return $this->hasMany(InvoiceLine::class);
     }
 
-    public function customer_country(): BelongsTo
+    public function saveResponse($type, $data): void
     {
-        return $this->belongsTo(CountryCodes::class, 'data->customer->address->country', 'code');
+        $responses = $this->response;
+
+        $status = match($type) {
+            'error' => false,
+            default => true,
+        };
+
+        $responses[] = [
+            'type' => $type,
+            ...$data,
+        ];
+
+        $this->update([
+            'response' => [
+                'status' => $status,
+                'payload' => $responses,
+            ],
+        ]);
     }
 
-    public function delivery_country(): BelongsTo
+    public function saveSuccessResponse(?array $data = []): void
     {
-        return $this->belongsTo(CountryCodes::class, 'data->delivery->countryOfOrigin', 'code');
+        $this->saveResponse('sucess', $data);
+    }
+
+    public function saveErrorResponse(string $message, ?array $error = []): void
+    {
+        $this->saveResponse('error', array_filter([
+            'error' => $message,
+            'data' => $error
+        ]));
     }
 }

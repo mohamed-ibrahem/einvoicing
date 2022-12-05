@@ -2,10 +2,6 @@
 
 namespace App\Domains\Invoice\Filament\InvoiceResource\RelationManagers;
 
-use App\Domains\Invoice\Models\InvoiceLine;
-use Filament\Forms\Components\Placeholder;
-use Filament\Forms\Components\TextInput;
-use Filament\Resources\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Resources\Table;
 use Filament\Tables\Columns\TextColumn;
@@ -14,7 +10,7 @@ class InvoiceLinesRelationManager extends RelationManager
 {
     protected static string $relationship = 'invoiceLines';
 
-    protected static ?string $recordTitleAttribute = 'id';
+    protected static ?string $recordTitleAttribute = 'data->description';
 
     public static function table(Table $table): Table
     {
@@ -29,8 +25,7 @@ class InvoiceLinesRelationManager extends RelationManager
 
                 TextColumn::make('data.itemCode')
                     ->label(__('Code'))
-                    ->searchable(['data->itemCode'])
-                    ->sortable(['data->itemCode']),
+                    ->searchable(['data->itemCode']),
 
                 TextColumn::make('data.quantity')
                     ->label(__('Quantity'))
