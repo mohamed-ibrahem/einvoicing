@@ -3,7 +3,6 @@
 namespace App\Domains\User\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use App\Domains\Branch\Concerns\BelongsToBranch;
 use App\Domains\Branch\Concerns\HasBranches;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;

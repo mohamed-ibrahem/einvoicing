@@ -21,8 +21,7 @@ class SubmitInvoiceToETA implements ShouldQueue
 
     public function __construct(
         public InvoiceModel $invoice,
-    )
-    {
+    ) {
         //
     }
 
@@ -46,6 +45,7 @@ class SubmitInvoiceToETA implements ShouldQueue
 
     /**
      * @return DTO\Invoice
+     *
      * @throws JsonException
      */
     private function getInvoice(): DTO\Invoice
@@ -75,7 +75,7 @@ class SubmitInvoiceToETA implements ShouldQueue
     }
 
     /**
-     * @param InvoiceModel $invoice
+     * @param  InvoiceModel  $invoice
      * @return DTO\Issuer
      */
     private function getIssuer(InvoiceModel $invoice): DTO\Issuer
@@ -101,7 +101,7 @@ class SubmitInvoiceToETA implements ShouldQueue
     }
 
     /**
-     * @param InvoiceModel $invoice
+     * @param  InvoiceModel  $invoice
      * @return DTO\Receiver
      */
     private function getReceiver(InvoiceModel $invoice): DTO\Receiver
@@ -127,13 +127,13 @@ class SubmitInvoiceToETA implements ShouldQueue
     }
 
     /**
-     * @param InvoiceModel $invoice
+     * @param  InvoiceModel  $invoice
      * @return DTO\InvoiceLine[]
      */
     private function getInvoiceLines(InvoiceModel $invoice): array
     {
         return $invoice->invoiceLines->map(
-            fn(InvoiceLine $model) => new DTO\InvoiceLine(
+            fn (InvoiceLine $model) => new DTO\InvoiceLine(
                 $model->getData('description'),
                 $model->getData('itemType'),
                 $model->getData('itemCode'),
@@ -155,7 +155,7 @@ class SubmitInvoiceToETA implements ShouldQueue
                     $model->getData('discount.rate'),
                     $model->getData('discount.amount'),
                 ),
-                array_map(static fn($tax) => new DTO\TaxableItem(
+                array_map(static fn ($tax) => new DTO\TaxableItem(
                     $tax['taxType'],
                     $tax['amount'],
                     $tax['subType'],
@@ -167,12 +167,12 @@ class SubmitInvoiceToETA implements ShouldQueue
     }
 
     /**
-     * @param InvoiceModel $invoice
+     * @param  InvoiceModel  $invoice
      * @return DTO\Payment|null
      */
     private function getPayment(InvoiceModel $invoice): ?DTO\Payment
     {
-        if (!$invoice->data->has('payment')) {
+        if (! $invoice->data->has('payment')) {
             return null;
         }
 
@@ -187,12 +187,12 @@ class SubmitInvoiceToETA implements ShouldQueue
     }
 
     /**
-     * @param InvoiceModel $invoice
+     * @param  InvoiceModel  $invoice
      * @return DTO\Delivery|null
      */
     private function getDelivery(InvoiceModel $invoice): ?DTO\Delivery
     {
-        if (!$invoice->data->has('delivery')) {
+        if (! $invoice->data->has('delivery')) {
             return null;
         }
 
@@ -209,13 +209,13 @@ class SubmitInvoiceToETA implements ShouldQueue
     }
 
     /**
-     * @param InvoiceModel $invoice
+     * @param  InvoiceModel  $invoice
      * @return DTO\TaxTotal[]
      */
     private function getTaxTotals(InvoiceModel $invoice): array
     {
         return array_map(
-            static fn($tax) => new DTO\TaxTotal($tax['taxType'], $tax['amount']),
+            static fn ($tax) => new DTO\TaxTotal($tax['taxType'], $tax['amount']),
             $invoice->getData('taxTotals')
         );
     }

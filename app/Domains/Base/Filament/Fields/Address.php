@@ -11,7 +11,7 @@ class Address
     /**
      * Generate list of address fields.
      *
-     * @param array $fields
+     * @param  array  $fields
      * @return array
      */
     public static function make(array $fields = []): array
@@ -27,7 +27,7 @@ class Address
                     ->label(__('Additional Information'))
                     ->nullable($data['nullable']),
                 default => TextInput::make($data['attribute'])
-                    ->label(__((string)Str::of($data['attribute'])->afterLast('.')->snake()->replace('_', ' ')->title()))
+                    ->label(__((string) Str::of($data['attribute'])->afterLast('.')->snake()->replace('_', ' ')->title()))
                     ->maxLength($data['maxLength'] ?? 255)
                     ->nullable($data['nullable'])
             };

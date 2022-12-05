@@ -14,11 +14,11 @@ class Countries extends Select
         $this->searchable();
 
         $this->getSearchResultsUsing(
-            fn(string $search) => CountryCodes::search($search)->limit(5)->get()->pluck('description', 'code')
+            fn (string $search) => CountryCodes::search($search)->limit(5)->get()->pluck('description', 'code')
         );
 
         $this->getOptionLabelUsing(
-            fn($value): ?string => CountryCodes::where('code', $value)->first()?->description
+            fn ($value): ?string => CountryCodes::where('code', $value)->first()?->description
         );
     }
 }

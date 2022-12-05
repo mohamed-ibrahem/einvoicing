@@ -9,8 +9,8 @@ use Closure;
 class Invoice extends Api
 {
     /**
-     * @param DTO\Invoice $invoice
-     * @param Closure $callback
+     * @param  DTO\Invoice  $invoice
+     * @param  Closure  $callback
      * @return void
      *
      * @throws BadRequestException

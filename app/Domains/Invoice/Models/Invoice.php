@@ -5,7 +5,6 @@ namespace App\Domains\Invoice\Models;
 use App\Domains\Base\Models\Concerncs\HasDataObject;
 use App\Domains\Branch\Concerns\BelongsToBranch;
 use Database\Factories\InvoiceFactory;
-use Exception;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -59,7 +58,7 @@ class Invoice extends Model
     {
         $responses = $this->response;
 
-        $status = match($type) {
+        $status = match ($type) {
             'error' => false,
             default => true,
         };
@@ -86,7 +85,7 @@ class Invoice extends Model
     {
         $this->saveResponse('error', array_filter([
             'error' => $message,
-            'data' => $error
+            'data' => $error,
         ]));
     }
 }

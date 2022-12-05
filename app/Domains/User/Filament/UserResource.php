@@ -42,14 +42,14 @@ class UserResource extends Resource
                             ->label(__('Your Current Password'))
                             ->password()
                             ->currentPassword()
-                            ->required(fn(string $context): bool => $context === 'create'),
+                            ->required(fn (string $context): bool => $context === 'create'),
 
                         TextInput::make('password')
                             ->label(__('User Password'))
                             ->password()
                             ->reactive()
-                            ->dehydrateStateUsing(fn($state) => Hash::make($state))
-                            ->dehydrated(fn($state) => filled($state))
+                            ->dehydrateStateUsing(fn ($state) => Hash::make($state))
+                            ->dehydrated(fn ($state) => filled($state))
                             ->requiredWith('auth_password'),
 
                         TextInput::make('password_confirmation')

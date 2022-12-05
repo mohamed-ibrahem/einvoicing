@@ -2,7 +2,6 @@
 
 namespace App\Domains\ETA\APIs;
 
-use App\Domains\Branch\Models\Branch;
 use App\Domains\ETA\DTO;
 use App\Domains\ETA\Exceptions\BadRequestException;
 

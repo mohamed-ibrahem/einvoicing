@@ -3,8 +3,6 @@
 namespace App\Domains\Invoice\Filament\InvoiceResource\Pages;
 
 use App\Domains\Invoice\Filament\InvoiceResource;
-use App\Domains\Invoice\Models\Invoice;
-use Closure;
 use Filament\Pages\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 

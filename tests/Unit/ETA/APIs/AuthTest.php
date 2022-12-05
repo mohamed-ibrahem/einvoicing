@@ -2,7 +2,6 @@
 
 namespace Tests\Unit\ETA\APIs;
 
-use App\Domains\Branch\Models\Branch;
 use App\Domains\ETA\APIs\Auth;
 use Illuminate\Support\Facades\Http;
 use Tests\Fixtures\ETA\APIs\AuthResponses;

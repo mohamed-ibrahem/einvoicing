@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
      * Seed the application's database.
      *
      * @return void
+     *
      * @throws \Exception
      */
     public function run(): void
@@ -23,7 +24,7 @@ class DatabaseSeeder extends Seeder
         $admin = User::factory([
             'name' => 'Super admin',
             'email' => 'admin@system.app',
-            'password' => Hash::make('123456789')
+            'password' => Hash::make('123456789'),
         ])->create();
 
         Branch::factory()

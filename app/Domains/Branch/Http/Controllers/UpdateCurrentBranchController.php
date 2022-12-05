@@ -13,13 +13,13 @@ class UpdateCurrentBranchController extends Controller
     /**
      * Update the authenticated user's current branch.
      *
-     * @param Request $request
-     * @param Branch $branch
+     * @param  Request  $request
+     * @param  Branch  $branch
      * @return RedirectResponse
      */
     public function __invoke(Request $request, Branch $branch): RedirectResponse
     {
-        if (!$request->user()->switchBranch($branch)) {
+        if (! $request->user()->switchBranch($branch)) {
             abort(403);
         }
 

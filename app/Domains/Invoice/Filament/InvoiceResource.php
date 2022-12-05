@@ -154,7 +154,7 @@ class InvoiceResource extends Resource
                             ->options([
                                 'B' => 'Business in Egypt (B)',
                                 'P' => 'Natural person (P)',
-                                'F' => 'Foreigner (F)'
+                                'F' => 'Foreigner (F)',
                             ]),
 
                         Section::make('Address information')
@@ -184,22 +184,22 @@ class InvoiceResource extends Resource
                                 [
                                     'attribute' => 'data.customer.address.postalCode',
                                     'nullable' => true,
-                                    'maxLength' => 10
+                                    'maxLength' => 10,
                                 ],
                                 [
                                     'attribute' => 'data.customer.address.floor',
                                     'nullable' => true,
-                                    'maxLength' => 10
+                                    'maxLength' => 10,
                                 ],
                                 [
                                     'attribute' => 'data.customer.address.room',
                                     'nullable' => true,
-                                    'maxLength' => 10
+                                    'maxLength' => 10,
                                 ],
                                 [
                                     'attribute' => 'data.customer.address.landmark',
                                     'nullable' => true,
-                                    'maxLength' => 10
+                                    'maxLength' => 10,
                                 ],
                                 'additional_information' => [
                                     'attribute' => 'data.customer.address.additionalInformation',

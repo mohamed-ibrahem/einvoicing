@@ -4,12 +4,11 @@ namespace App\Domains\Branch\Filament;
 
 use App\Domains\Base\Filament\Fields\ActivityCodes;
 use App\Domains\Base\Filament\Fields\Address;
-use App\Domains\Base\Filament\Fields\Countries;
 use App\Domains\Branch\Filament\BranchResource\Pages;
 use App\Domains\Branch\Models\Branch;
+use Exception;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
@@ -43,7 +42,7 @@ class BranchResource extends Resource
                     ->options([
                         'B' => 'Business in Egypt (B)',
                         'P' => 'Natural person (P)',
-                        'F' => 'Foreigner (F)'
+                        'F' => 'Foreigner (F)',
                     ]),
 
                 ActivityCodes::make('activity_code')
@@ -77,22 +76,22 @@ class BranchResource extends Resource
                         [
                             'attribute' => 'postal_code',
                             'nullable' => true,
-                            'maxLength' => 10
+                            'maxLength' => 10,
                         ],
                         [
                             'attribute' => 'floor',
                             'nullable' => true,
-                            'maxLength' => 10
+                            'maxLength' => 10,
                         ],
                         [
                             'attribute' => 'room',
                             'nullable' => true,
-                            'maxLength' => 10
+                            'maxLength' => 10,
                         ],
                         [
                             'attribute' => 'landmark',
                             'nullable' => true,
-                            'maxLength' => 10
+                            'maxLength' => 10,
                         ],
                         'additional_information' => [
                             'attribute' => 'address_additional_information',
@@ -102,6 +101,9 @@ class BranchResource extends Resource
             ]);
     }
 
+    /**
+     * @throws Exception
+     */
     public static function table(Table $table): Table
     {
         return $table
@@ -111,7 +113,7 @@ class BranchResource extends Resource
                     ViewAction::make(),
                     EditAction::make(),
                     DeleteAction::make(),
-                ])
+                ]),
             ])
             ->columns([
                 TextColumn::make('name')
@@ -121,10 +123,10 @@ class BranchResource extends Resource
 
                 TextColumn::make('type')
                     ->label(__())
-                    ->formatStateUsing(fn(Branch $record) => [
+                    ->formatStateUsing(fn (Branch $record) => [
                         'B' => 'Business in Egypt (B)',
                         'P' => 'Natural person (P)',
-                        'F' => 'Foreigner (F)'
+                        'F' => 'Foreigner (F)',
                     ][$record->type] ?? '-')
                     ->sortable()
                     ->searchable(),
