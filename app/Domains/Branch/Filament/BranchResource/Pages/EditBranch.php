@@ -21,6 +21,6 @@ class EditBranch extends EditRecord
 
     protected function afterSave(): void
     {
-        $this->emit('refresh-teams-menu');
+        $this->emit('refresh-top-bar-menu');
     }
 }

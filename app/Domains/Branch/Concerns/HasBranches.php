@@ -89,6 +89,6 @@ trait HasBranches
      */
     public function isCurrentBranch(Branch $branch): bool
     {
-        return $branch->getKey() === $this->currentBranch->getKey();
+        return $branch->getKey() === $this->current_branch_id;
     }
 }
