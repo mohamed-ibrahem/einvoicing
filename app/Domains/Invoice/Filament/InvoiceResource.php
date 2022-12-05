@@ -2,6 +2,7 @@
 
 namespace App\Domains\Invoice\Filament;
 
+use App\Domains\Base\Filament\Fields\Address;
 use App\Domains\Base\Filament\Fields\Countries;
 use App\Domains\Base\Filament\Fields\TaxTypes;
 use App\Domains\Invoice\Filament\InvoiceResource\Actions\SubmitInvoiceAction;
@@ -158,47 +159,53 @@ class InvoiceResource extends Resource
 
                         Section::make('Address information')
                             ->collapsible()
-                            ->schema([
-                                Countries::make('data.customer.address.country')
-                                    ->label(__('Country'))
-                                    ->nullable(),
-
-                                TextInput::make('data.customer.address.regionCity')
-                                    ->label(__('Region City'))
-                                    ->nullable(),
-
-                                TextInput::make('data.customer.address.governate')
-                                    ->label(__('Governate'))
-                                    ->nullable(),
-
-                                TextInput::make('data.customer.address.street')
-                                    ->label(__('Street'))
-                                    ->nullable(),
-
-                                TextInput::make('data.customer.address.buildingNumber')
-                                    ->label(__('Building Number'))
-                                    ->nullable(),
-
-                                TextInput::make('data.customer.address.postalCode')
-                                    ->nullable()
-                                    ->label(__('Postal Code')),
-
-                                TextInput::make('data.customer.address.floor')
-                                    ->nullable()
-                                    ->label(__('Floor')),
-
-                                TextInput::make('data.customer.address.room')
-                                    ->nullable()
-                                    ->label(__('Room')),
-
-                                TextInput::make('data.customer.address.landmark')
-                                    ->nullable()
-                                    ->label(__('Landmark')),
-
-                                Textarea::make('data.customer.address.additionalInformation')
-                                    ->nullable()
-                                    ->label(__('Additional Information')),
-                            ]),
+                            ->schema(Address::make([
+                                'country' => [
+                                    'attribute' => 'data.customer.address.country',
+                                    'nullable' => false,
+                                ],
+                                [
+                                    'attribute' => 'data.customer.address.regionCity',
+                                    'nullable' => false,
+                                ],
+                                [
+                                    'attribute' => 'data.customer.address.governate',
+                                    'nullable' => false,
+                                ],
+                                [
+                                    'attribute' => 'data.customer.address.street',
+                                    'nullable' => false,
+                                ],
+                                [
+                                    'attribute' => 'data.customer.address.buildingNumber',
+                                    'nullable' => false,
+                                    'maxLength' => 10,
+                                ],
+                                [
+                                    'attribute' => 'data.customer.address.postalCode',
+                                    'nullable' => true,
+                                    'maxLength' => 10
+                                ],
+                                [
+                                    'attribute' => 'data.customer.address.floor',
+                                    'nullable' => true,
+                                    'maxLength' => 10
+                                ],
+                                [
+                                    'attribute' => 'data.customer.address.room',
+                                    'nullable' => true,
+                                    'maxLength' => 10
+                                ],
+                                [
+                                    'attribute' => 'data.customer.address.landmark',
+                                    'nullable' => true,
+                                    'maxLength' => 10
+                                ],
+                                'additional_information' => [
+                                    'attribute' => 'data.customer.address.additionalInformation',
+                                    'nullable' => true,
+                                ],
+                            ])),
                     ]),
 
                 Section::make('Payment')

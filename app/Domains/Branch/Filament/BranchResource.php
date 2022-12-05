@@ -3,6 +3,7 @@
 namespace App\Domains\Branch\Filament;
 
 use App\Domains\Base\Filament\Fields\ActivityCodes;
+use App\Domains\Base\Filament\Fields\Address;
 use App\Domains\Base\Filament\Fields\Countries;
 use App\Domains\Branch\Filament\BranchResource\Pages;
 use App\Domains\Branch\Models\Branch;
@@ -33,11 +34,11 @@ class BranchResource extends Resource
         return $form
             ->schema([
                 TextInput::make('name')
-                    ->translateLabel()
+                    ->label(__())
                     ->required(),
 
                 Select::make('type')
-                    ->translateLabel()
+                    ->label(__())
                     ->required()
                     ->options([
                         'B' => 'Business in Egypt (B)',
@@ -46,57 +47,58 @@ class BranchResource extends Resource
                     ]),
 
                 ActivityCodes::make('activity_code')
-                    ->translateLabel()
+                    ->label(__())
                     ->required(),
 
                 Section::make('Address information')
                     ->collapsible()
-                    ->schema([
-                        Countries::make('country')
-                            ->translateLabel()
-                            ->required(),
-
-                        TextInput::make('region_city')
-                            ->translateLabel()
-                            ->required(),
-
-                        TextInput::make('governate')
-                            ->translateLabel()
-                            ->required(),
-
-                        TextInput::make('street')
-                            ->translateLabel()
-                            ->required(),
-
-                        TextInput::make('building_number')
-                            ->translateLabel()
-                            ->maxLength(10)
-                            ->required(),
-
-                        TextInput::make('postal_code')
-                            ->translateLabel()
-                            ->nullable()
-                            ->maxLength(10),
-
-                        TextInput::make('floor')
-                            ->translateLabel()
-                            ->nullable()
-                            ->maxLength(10),
-
-                        TextInput::make('room')
-                            ->translateLabel()
-                            ->nullable()
-                            ->maxLength(10),
-
-                        TextInput::make('landmark')
-                            ->translateLabel()
-                            ->nullable()
-                            ->maxLength(10),
-
-                        Textarea::make('address_additional_information')
-                            ->translateLabel()
-                            ->nullable(),
-                    ]),
+                    ->schema(Address::make([
+                        'country' => [
+                            'attribute' => 'country',
+                            'nullable' => false,
+                        ],
+                        [
+                            'attribute' => 'region_city',
+                            'nullable' => false,
+                        ],
+                        [
+                            'attribute' => 'governate',
+                            'nullable' => false,
+                        ],
+                        [
+                            'attribute' => 'street',
+                            'nullable' => false,
+                        ],
+                        [
+                            'attribute' => 'building_number',
+                            'nullable' => false,
+                            'maxLength' => 10,
+                        ],
+                        [
+                            'attribute' => 'postal_code',
+                            'nullable' => true,
+                            'maxLength' => 10
+                        ],
+                        [
+                            'attribute' => 'floor',
+                            'nullable' => true,
+                            'maxLength' => 10
+                        ],
+                        [
+                            'attribute' => 'room',
+                            'nullable' => true,
+                            'maxLength' => 10
+                        ],
+                        [
+                            'attribute' => 'landmark',
+                            'nullable' => true,
+                            'maxLength' => 10
+                        ],
+                        'additional_information' => [
+                            'attribute' => 'address_additional_information',
+                            'nullable' => true,
+                        ],
+                    ])),
             ]);
     }
 
@@ -113,12 +115,12 @@ class BranchResource extends Resource
             ])
             ->columns([
                 TextColumn::make('name')
-                    ->translateLabel()
+                    ->label(__())
                     ->searchable()
                     ->sortable(),
 
                 TextColumn::make('type')
-                    ->translateLabel()
+                    ->label(__())
                     ->formatStateUsing(fn(Branch $record) => [
                         'B' => 'Business in Egypt (B)',
                         'P' => 'Natural person (P)',
@@ -128,13 +130,13 @@ class BranchResource extends Resource
                     ->searchable(),
 
                 TextColumn::make('activity_code_relation.description')
-                    ->translateLabel(),
+                    ->label(__()),
 
                 TextColumn::make('country_relation.description')
-                    ->translateLabel(),
+                    ->label(__()),
 
                 TextColumn::make('region_city')
-                    ->translateLabel()
+                    ->label(__())
                     ->searchable(),
             ]);
     }
