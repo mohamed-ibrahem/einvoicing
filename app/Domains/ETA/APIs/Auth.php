@@ -26,8 +26,8 @@ class Auth extends Api
         $response = $this->asForm()
             ->post('/connect/token', [
                 'grant_type' => 'client_credentials',
-                'client_id' => config('services.eta.client_id'),
-                'client_secret' => config('services.eta.client_secret'),
+                'client_id' => config('eta.client_id'),
+                'client_secret' => config('eta.client_secret'),
                 'scope' => '',
             ]);
 
