@@ -34,4 +34,17 @@ class InvoiceResponses
             ],
         ]);
     }
+
+    public static function successResponse(): PromiseInterface
+    {
+        return Http::response([
+            'submissionId' => fake()->uuid(),
+            'acceptedDocuments' => [
+                [
+                    'internalId' => '4c3846d0-1887-3a57-a6ec-c1a415ec5093',
+                ],
+            ],
+            'rejectedDocuments' => [],
+        ]);
+    }
 }

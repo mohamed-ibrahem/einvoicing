@@ -3,6 +3,8 @@
 namespace Tests\Unit\ETA\APIs;
 
 use App\Domains\ETA\APIs\Auth;
+use App\Domains\ETA\Exceptions\BadRequestException;
+use Exception;
 use Illuminate\Support\Facades\Http;
 use Tests\Fixtures\ETA\APIs\AuthResponses;
 use Tests\TestCase;
@@ -17,7 +19,11 @@ class AuthTest extends TestCase
             '/connect/token' => fn () => AuthResponses::successResponse(),
         ]);
 
-        $auth = app(Auth::class)->login();
+        try {
+            $auth = app(Auth::class)->login();
+        } catch (Exception $e) {
+            $this->fail($e->getMessage());
+        }
 
         $this->assertEquals('token', $auth->token);
         $this->assertEquals('Bearer', $auth->tokenType);
@@ -32,6 +38,7 @@ class AuthTest extends TestCase
             '/connect/token' => fn () => AuthResponses::failedWithError('error message'),
         ]);
 
+        $this->expectException(BadRequestException::class);
         $this->expectExceptionMessage('error message');
 
         app(Auth::class)->login();
