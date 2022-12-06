@@ -32,7 +32,8 @@ class InvoiceLine extends Model
     ];
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
+     *
      * @return InvoiceLineFactory
      */
     protected static function newFactory(): InvoiceLineFactory

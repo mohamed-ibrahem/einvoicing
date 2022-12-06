@@ -191,8 +191,7 @@ class CurrencyCodes extends Model
         ],
         [
             'code' => 'XBD',
-            'description' =>
-                'Bond Markets Unit European Unit of Account 17 (E.U.A.-17)',
+            'description' => 'Bond Markets Unit European Unit of Account 17 (E.U.A.-17)',
         ],
         ['code' => 'XCD', 'description' => 'East Caribbean Dollar'],
         ['code' => 'XDR', 'description' => 'SDR (Special Drawing Right)'],
@@ -208,8 +207,7 @@ class CurrencyCodes extends Model
         ['code' => 'XUA', 'description' => 'ADB Unit of Account'],
         [
             'code' => 'XXX',
-            'description' =>
-                'The codes assigned for transactions where no currency is involved',
+            'description' => 'The codes assigned for transactions where no currency is involved',
         ],
         ['code' => 'YER', 'description' => 'Yemeni Rial'],
         ['code' => 'ZAR', 'description' => 'Rand'],

@@ -48,12 +48,12 @@ trait HasBranches
     /**
      * Switch the user's context to the given branch.
      *
-     * @param Branch|null $branch
+     * @param  Branch|null  $branch
      * @return bool
      */
     public function switchBranch(?Branch $branch = null): bool
     {
-        if (is_null($branch) || !$this->belongsToBranch($branch)) {
+        if (is_null($branch) || ! $this->belongsToBranch($branch)) {
             return false;
         }
 
@@ -69,7 +69,7 @@ trait HasBranches
     /**
      * Determine if the user belongs to the given branch.
      *
-     * @param Branch|null $branch
+     * @param  Branch|null  $branch
      * @return bool
      */
     public function belongsToBranch(?Branch $branch): bool
@@ -78,13 +78,13 @@ trait HasBranches
             return false;
         }
 
-        return $this->branches->contains(fn($t) => $t->id === $branch->id);
+        return $this->branches->contains(fn ($t) => $t->id === $branch->id);
     }
 
     /**
      * Determine if the given branch is the current branch.
      *
-     * @param Branch $branch
+     * @param  Branch  $branch
      * @return bool
      */
     public function isCurrentBranch(Branch $branch): bool

@@ -3,11 +3,9 @@
 namespace Tests\Unit\ETA\APIs;
 
 use App\Domains\Branch\Models\Branch;
+use App\Domains\ETA\APIs\Invoice;
 use App\Domains\Invoice\Models\Invoice as InvoiceModel;
 use App\Domains\Invoice\Models\InvoiceLine;
-use App\Domains\ETA\APIs\Invoice;
-use Illuminate\Support\Facades\Http;
-use Tests\Fixtures\ETA\APIs\AuthResponses;
 use Tests\TestCase;
 
 /** @see Invoice */

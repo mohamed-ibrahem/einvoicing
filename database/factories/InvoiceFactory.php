@@ -19,7 +19,7 @@ class InvoiceFactory extends Factory
     protected $model = Invoice::class;
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      *
      * @return array<string, mixed>
      */
@@ -80,7 +80,7 @@ class InvoiceFactory extends Factory
                     'grossWeight' => fake()->randomNumber(),
                     'netWeight' => fake()->randomNumber(),
                     'terms' => fake()->sentence(),
-                ]
+                ],
             ],
             'branch_id' => Branch::factory(),
             'created_at' => Carbon::now(),

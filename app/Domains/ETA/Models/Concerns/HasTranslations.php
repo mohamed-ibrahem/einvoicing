@@ -13,7 +13,7 @@ trait HasTranslations
     {
         $locale = app()->getLocale();
 
-        $value = $this->getAttribute('desc_' . $locale);
+        $value = $this->getAttribute('desc_'.$locale);
 
         if (is_null($value)) {
             return $this->getAttribute('desc_en');

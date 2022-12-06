@@ -4,7 +4,6 @@ namespace App\Domains\ETA\APIs;
 
 use App\Domains\ETA\Exceptions\BadRequestException;
 use Illuminate\Http\Client\PendingRequest;
-use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
 
 abstract class Api
@@ -77,8 +76,8 @@ abstract class Api
     /**
      * Specify an authorization token for the request.
      *
-     * @param string $token
-     * @param string $type
+     * @param  string  $token
+     * @param  string  $type
      * @return $this
      */
     public function withToken(string $token, string $type = 'Bearer'): static
@@ -91,9 +90,10 @@ abstract class Api
     /**
      * Issue a POST request to the given URL.
      *
-     * @param string $url
-     * @param array $data
+     * @param  string  $url
+     * @param  array  $data
      * @return array|null
+     *
      * @throws BadRequestException
      */
     protected function post(string $url, array $data = []): ?array
@@ -110,8 +110,9 @@ abstract class Api
     /**
      * Handle upcoming exceptions from ETA.
      *
-     * @param array|null $response
+     * @param  array|null  $response
      * @return void
+     *
      * @throws BadRequestException
      */
     protected function handleError(?array $response): void
