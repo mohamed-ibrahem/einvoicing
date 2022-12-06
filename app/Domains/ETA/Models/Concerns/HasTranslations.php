@@ -2,6 +2,8 @@
 
 namespace App\Domains\ETA\Models\Concerns;
 
+use Illuminate\Database\Eloquent\Builder;
+
 trait HasTranslations
 {
     /**
@@ -20,5 +22,12 @@ trait HasTranslations
         }
 
         return $value;
+    }
+
+    public function scopeSearch(Builder $query, string $term)
+    {
+        $query->where('code', 'LIKE', "%$term%")
+            ->orWhere('desc_ar', 'LIKE', "%$term%")
+            ->orWhere('desc_en', 'LIKE', "%$term%");
     }
 }

@@ -30,8 +30,6 @@ class BranchFactory extends Factory
             'name' => fake()->name(),
             'type' => 'B',
             'activity_code' => 123,
-            'client_id' => 'e0eba311-6e5e-4d82-bff4-402ac46fc36b',
-            'client_secret' => '73d76777-aa79-403c-8298-5338ae2b7d7d',
             'country' => 'EG',
             'region_city' => fake()->city(),
             'governate' => fake()->citySuffix(),

@@ -3,7 +3,6 @@
 namespace App\Domains\User\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use App\Domains\Branch\Concerns\BelongsToBranch;
 use App\Domains\Branch\Concerns\HasBranches;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -14,7 +13,6 @@ class User extends Authenticatable
 {
     use HasFactory;
     use Notifiable;
-    use BelongsToBranch;
     use HasBranches;
 
     /**
@@ -56,15 +54,5 @@ class User extends Authenticatable
     protected static function newFactory(): UserFactory
     {
         return new UserFactory();
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @return string
-     */
-    public static function getTenantKeyName(): string
-    {
-        return 'current_branch_id';
     }
 }

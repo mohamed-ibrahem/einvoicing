@@ -34,7 +34,7 @@ abstract class Document
      * @param  string  $taxpayerActivityCode Tax activity code of the business issuing the document representing the activity that caused it to be issued. Must be valid activity type code.
      * @param  string  $internalID Internal document ID used to link back to the ERP document number. Value defined by the submitter.
      * @param  float  $totalDiscountAmount Total amount of discounts: sum of all Discount amount elements of InvoiceLine items.
-     * @param  float  $totalSalesAmount Sum all all InvoiceLine/SalesTotal items.
+     * @param  float  $totalSalesAmount Sum all InvoiceLine/SalesTotal items.
      * @param  float  $netAmount TotalSales – TotalDiscount
      * @param  TaxTotal[]  $taxTotals Totals per tax type.
      * @param  float  $totalAmount Total amount of the invoice calculated as NetAmount + Totals of tax amounts. 5 decimal digits allowed.
@@ -48,6 +48,8 @@ abstract class Document
      * @param  string|null  $proformaInvoiceNumber Reference to the previous proforma invoice.
      * @param  Payment|null  $payment Structure containing fields providing information on how payments needs to be made.
      * @param  Delivery|null  $delivery Structure containing fields providing information on how the delivery of goods.
+     *
+     * @throws JsonException
      */
     public function __construct(
         public readonly Issuer $issuer,

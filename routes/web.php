@@ -1,5 +1,8 @@
 <?php
 
+use App\Domains\Branch\Http\Controllers\UpdateCurrentBranchController;
+use Illuminate\Support\Facades\Route;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -10,3 +13,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('/current-branch/{branch}', UpdateCurrentBranchController::class)
+    ->middleware(['auth'])
+    ->name('update_current_branch');

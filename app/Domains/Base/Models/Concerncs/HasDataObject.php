@@ -14,7 +14,7 @@ trait HasDataObject
      * @param  string  $column
      * @return mixed
      */
-    public function data(string $key, mixed $default = null, string $column = 'data'): mixed
+    public function getData(string $key, mixed $default = null, string $column = 'data'): mixed
     {
         $this->mergeCasts([
             $column => 'collection',

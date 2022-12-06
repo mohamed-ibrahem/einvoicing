@@ -35,7 +35,7 @@ abstract class Api
      */
     public function getBaseUrl(): string
     {
-        $env = config('services.eta.environment', 'preprod');
+        $env = config('eta.environment', 'preprod');
 
         return match ($env) {
             'preprod' => str_replace([

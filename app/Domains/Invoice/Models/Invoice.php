@@ -53,4 +53,39 @@ class Invoice extends Model
     {
         return $this->hasMany(InvoiceLine::class);
     }
+
+    public function saveResponse($type, $data): void
+    {
+        $responses = $this->response;
+
+        $status = match ($type) {
+            'error' => false,
+            default => true,
+        };
+
+        $responses[] = [
+            'type' => $type,
+            ...$data,
+        ];
+
+        $this->update([
+            'response' => [
+                'status' => $status,
+                'payload' => $responses,
+            ],
+        ]);
+    }
+
+    public function saveSuccessResponse(?array $data = []): void
+    {
+        $this->saveResponse('sucess', $data);
+    }
+
+    public function saveErrorResponse(string $message, ?array $error = []): void
+    {
+        $this->saveResponse('error', array_filter([
+            'error' => $message,
+            'data' => $error,
+        ]));
+    }
 }
