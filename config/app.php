@@ -199,6 +199,7 @@ return [
         App\Domains\Branch\BranchServiceProvider::class,
         App\Domains\Invoice\InvoiceServiceProvider::class,
         App\Domains\ETA\ETAServiceProvider::class,
+        App\Domains\Feeds\FeedsServiceProvider::class,
     ],
 
     /*
