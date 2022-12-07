@@ -49,10 +49,24 @@ class RetailPro extends Driver
      */
     private function login(): void
     {
-        Http::baseUrl(config('eta.drivers.retail_pro.baseURL'))
+        $preAuth = Http::baseUrl(config('eta.drivers.retail_pro.baseURL'))->get('auth');
+
+        $auth = Http::baseUrl(config('eta.drivers.retail_pro.baseURL'))
+            ->withHeaders([
+                'Auth-Nonce' => $preAuth->header('Auth-Nonce'),
+                'Auth-Nonce-Response' => (((int) $preAuth->header('Auth-Nonce') / 13) % 99999) * 17,
+            ])
             ->get('auth', [
                 'usr' => config('eta.drivers.retail_pro.username'),
                 'pwd' => config('eta.drivers.retail_pro.password'),
+            ]);
+
+        Http::baseUrl(config('eta.drivers.retail_pro.baseURL'))
+            ->withHeaders([
+                'Auth-Session' => $auth->header('Auth-Session'),
+            ])
+            ->get('sit', [
+                'ws' => 'webclient',
             ]);
     }
 }
