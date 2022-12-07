@@ -17,7 +17,10 @@ class SubmitInvoiceAction extends Action
     {
         parent::setUp();
 
-        $this->visible(fn (Invoice $record) => auth()->user()?->can('update', $record));
+        /** @var Invoice $model */
+        $model = $this->record;
+
+        $this->visible(auth()->user()?->can('update', $model));
 
         $this->label(__('Submit'));
 
@@ -27,15 +30,13 @@ class SubmitInvoiceAction extends Action
 
         $this->icon('heroicon-o-upload');
 
-        $this->modalHeading(fn (): string => __('Submit invoice #:label', ['label' => $this->record->getData('id')]));
+        $this->modalHeading(fn (): string => __('Submit invoice #:label', ['label' => $model->getData('id')]));
 
         $this->modalActions(fn (): array => [
             $this->getModalCancelAction()->label(__('filament-support::actions/view.single.modal.actions.close.label')),
             $this->getModalSubmitAction()->label(__('Submit to ETA')),
         ]);
 
-        $this->action(function (): void {
-            SubmitInvoiceToETA::dispatch($this->record);
-        });
+        $this->action(fn () => SubmitInvoiceToETA::dispatch($model));
     }
 }
