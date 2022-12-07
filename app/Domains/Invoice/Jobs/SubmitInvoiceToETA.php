@@ -59,7 +59,7 @@ class SubmitInvoiceToETA implements ShouldQueue
             $this->getReceiver($this->invoice),
             $this->invoice->created_at->toDateTimeLocalString(),
             $this->invoice->branch->activity_code,
-            $this->invoice->uuid,
+            $this->invoice->getData('id'),
             $this->invoice->getData('totalDiscountAmount'),
             $this->invoice->getData('totalSalesAmount'),
             $this->invoice->getData('netAmount'),
