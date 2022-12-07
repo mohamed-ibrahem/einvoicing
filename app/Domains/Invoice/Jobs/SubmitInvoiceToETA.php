@@ -36,7 +36,11 @@ class SubmitInvoiceToETA implements ShouldQueue
                             $rejectedDocument['error']['message'],
                             $rejectedDocument['error']
                         );
+
+                        return;
                     }
+
+                    $this->invoice->saveSuccessResponse($response);
                 });
         } catch (Exception $e) {
             $this->invoice->saveErrorResponse($e->getMessage());

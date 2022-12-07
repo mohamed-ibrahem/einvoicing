@@ -78,7 +78,7 @@ class Invoice extends Model
 
     public function saveSuccessResponse(?array $data = []): void
     {
-        $this->saveResponse('sucess', $data);
+        $this->saveResponse('success', $data);
     }
 
     public function saveErrorResponse(string $message, ?array $error = []): void
