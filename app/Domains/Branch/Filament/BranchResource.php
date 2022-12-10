@@ -33,11 +33,15 @@ class BranchResource extends Resource
         return $form
             ->schema([
                 TextInput::make('name')
-                    ->label(__())
+                    ->label(__('Name'))
+                    ->required(),
+
+                TextInput::make('sid')
+                    ->label(__('Store ID'))
                     ->required(),
 
                 Select::make('type')
-                    ->label(__())
+                    ->label(__('Type'))
                     ->required()
                     ->options([
                         'B' => 'Business in Egypt (B)',
@@ -46,10 +50,11 @@ class BranchResource extends Resource
                     ]),
 
                 ActivityCodes::make('activity_code')
-                    ->label(__())
+                    ->label(__('Activity code'))
                     ->required(),
 
                 Section::make('Address information')
+                    ->label(__('Address information'))
                     ->collapsible()
                     ->schema(Address::make([
                         'country' => [
@@ -117,12 +122,17 @@ class BranchResource extends Resource
             ])
             ->columns([
                 TextColumn::make('name')
-                    ->label(__())
+                    ->label(__('Name'))
+                    ->searchable()
+                    ->sortable(),
+
+                TextColumn::make('sid')
+                    ->label(__('Store ID'))
                     ->searchable()
                     ->sortable(),
 
                 TextColumn::make('type')
-                    ->label(__())
+                    ->label(__('Type'))
                     ->formatStateUsing(fn (Branch $record) => [
                         'B' => 'Business in Egypt (B)',
                         'P' => 'Natural person (P)',
@@ -132,13 +142,13 @@ class BranchResource extends Resource
                     ->searchable(),
 
                 TextColumn::make('activity_code_relation.description')
-                    ->label(__()),
+                    ->label(__('Activity Code')),
 
                 TextColumn::make('country_relation.description')
-                    ->label(__()),
+                    ->label(__('Country')),
 
                 TextColumn::make('region_city')
-                    ->label(__())
+                    ->label(__('City'))
                     ->searchable(),
             ]);
     }

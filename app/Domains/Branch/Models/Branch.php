@@ -24,6 +24,7 @@ class Branch extends Model
      */
     protected $fillable = [
         'name',
+        'sid',
         'type',
         'activity_code',
         'country',
@@ -48,6 +49,12 @@ class Branch extends Model
         return new BranchFactory();
     }
 
+    /**
+     * Determine if the given user can create a new branch.
+     *
+     * @param  User  $user
+     * @return bool
+     */
     public static function checkIfTheUserCanCreateBranches(User $user): bool
     {
         return true;
