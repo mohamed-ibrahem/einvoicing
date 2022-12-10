@@ -3,8 +3,10 @@
 namespace App\Domains\Feeds\Drivers;
 
 use App\Domains\Branch\Models\Branch;
+use App\Domains\Invoice\Jobs\SubmitInvoiceToETA;
 use App\Domains\Invoice\Models\Invoice;
 use Illuminate\Http\Client\RequestException;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use InvalidArgumentException;
 
@@ -60,38 +62,42 @@ class RetailPro extends Driver
      */
     public function create(array $data): Invoice
     {
-        $invoice = Invoice::create([
-            'uuid' => $data['udf1string'],
-            'branch_id' => Branch::where([
-                'sid' => $data['storesid'],
-            ])->value('id'),
-            'data' => [
-                'id' => $data['sid'],
-                'totalDiscountAmount' => $data['totaldiscountamt'],
-                'totalSalesAmount' => $data['saletotalamt'],
-                'netAmount' => $data['salesubtotal'],
+        $invoice = DB::transaction(function () use ($data): Invoice {
+            $invoice = Invoice::create([
+                'uuid' => $data['sid'],
+                'branch_id' => Branch::where([
+                    'sid' => $data['store_uid'],
+                ])->value('id'),
+                'data' => [
+                    'id' => $data['sid'],
+                    'totalDiscountAmount' => $data['total_discount_amt'],
+                    'totalSalesAmount' => $data['sale_total_amt'],
+                    'netAmount' => $data['sale_subtotal'],
 
-                'customer' => [
-                    'id' => $data['btcuid'],
-                    'name' => $data['btfirstname'].' '.$data['btlastname'],
-                    'type' => 'B',
-                    'address' => [
-                        'country' => $data['btcountry'] ?? 'EG',
-                        'regionCity' => $data['btaddressline2'],
-                        'governate' => $data['btaddressline1'],
-                        'street' => $data['btaddressline3'],
-                        'buildingNumber' => 0,
-                        'postalCode' => $data['btpostalcode'],
-                        'floor' => 0,
-                        'room' => 0,
+                    'customer' => [
+                        'id' => $data['bt_cuid'],
+                        'name' => $data['bt_first_name'].' '.$data['bt_last_name'],
+                        'type' => 'B',
+                        'address' => [
+                            'country' => $data['bt_country'] ?? 'EG',
+                            'regionCity' => $data['bt_address_line2'],
+                            'governate' => $data['bt_address_line1'],
+                            'street' => $data['bt_address_line3'],
+                            'buildingNumber' => 0,
+                            'postalCode' => $data['bt_postal_code'],
+                            'floor' => 0,
+                            'room' => 0,
+                        ],
                     ],
                 ],
-            ],
-        ]);
+            ]);
 
-        $this->createInvoiceLine($invoice, $data['items']);
+            $this->createInvoiceLine($invoice, $data['items']);
 
-//        SubmitInvoiceToETA::dispatch($invoice);
+            return $invoice;
+        });
+
+        SubmitInvoiceToETA::dispatch($invoice);
 
         return $invoice;
     }
