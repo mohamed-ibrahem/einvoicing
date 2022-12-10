@@ -3,16 +3,15 @@
 namespace App\Domains\Feeds\Drivers;
 
 use App\Domains\Invoice\Models\Invoice;
-use Illuminate\Support\Collection;
 
 abstract class Driver
 {
     /**
      * Get all invoices from the adapter driver.
      *
-     * @return Collection<Invoice>
+     * @return void
      */
-    abstract public function run(): Collection;
+    abstract public function run(): void;
 
     /**
      * Create a new invoice.

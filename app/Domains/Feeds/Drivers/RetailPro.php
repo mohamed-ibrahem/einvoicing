@@ -3,10 +3,10 @@
 namespace App\Domains\Feeds\Drivers;
 
 use App\Domains\Branch\Models\Branch;
-use App\Domains\Invoice\Jobs\SubmitInvoiceToETA;
 use App\Domains\Invoice\Models\Invoice;
-use Illuminate\Support\Collection;
+use Illuminate\Http\Client\RequestException;
 use Illuminate\Support\Facades\Http;
+use InvalidArgumentException;
 
 class RetailPro extends Driver
 {
@@ -20,29 +20,34 @@ class RetailPro extends Driver
     /**
      * {@inheritDoc}
      *
-     * @return Collection
+     * @return void
+     *
+     * @throws RequestException
      */
-    public function run(): Collection
+    public function run(): void
     {
         $this->login();
 
-        return collect(
-            Http::baseUrl(config('eta.drivers.retail_pro.baseURL'))
-                ->withHeaders([
-                    'Accept' => 'application/json, text/plain, */*',
-                    'Auth-Session' => $this->auth_session,
-                ])
-                ->get('/api/backoffice/document')
-                ->json()
-        )->tap(function ($invoices) {
-            $invoices->each(function ($invoice) {
-                if ($invoice['status'] !== 4) {
-                    return;
-                }
+        $response = Http::baseUrl(config('eta.drivers.retail_pro.baseURL'))
+            ->withHeaders([
+                'Accept' => 'application/json',
+                'Auth-Session' => $this->auth_session,
+            ])
+            ->get('/v1/rest/document')
+            ->throw()
+            ->json();
 
-                $this->create($invoice);
-            });
-        });
+        if (count($response->get('errors', []))) {
+            throw new InvalidArgumentException($response['errors'][0]['errormsg'] ?? 'Fatal error');
+        }
+
+        foreach ($response->get('data', []) as $invoice) {
+            if ($invoice['status'] !== 4) {
+                return;
+            }
+
+            $this->create($invoice);
+        }
     }
 
     /**
@@ -82,7 +87,9 @@ class RetailPro extends Driver
             ],
         ]);
 
-        SubmitInvoiceToETA::dispatch($invoice);
+        // Create invoice line.
+
+//        SubmitInvoiceToETA::dispatch($invoice);
 
         return $invoice;
     }
