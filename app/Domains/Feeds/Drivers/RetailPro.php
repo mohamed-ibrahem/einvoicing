@@ -33,7 +33,9 @@ class RetailPro extends Driver
                 'Accept' => 'application/json',
                 'Auth-Session' => $this->auth_session,
             ])
-            ->get('/v1/rest/document')
+            ->get('/v1/rest/document', [
+                'cols' => '*',
+            ])
             ->throw()
             ->json();
 
@@ -51,7 +53,7 @@ class RetailPro extends Driver
     }
 
     /**
-     * {@inheritDoc}
+     * Create a new invoice.
      *
      * @param  array  $data
      * @return Invoice
@@ -87,11 +89,56 @@ class RetailPro extends Driver
             ],
         ]);
 
-        // Create invoice line.
+        $this->createInvoiceLine($invoice, $data['items']);
 
 //        SubmitInvoiceToETA::dispatch($invoice);
 
         return $invoice;
+    }
+
+    /**
+     * Create invoice line for the given invoice.
+     *
+     * @param  Invoice  $invoice
+     * @param  array  $items
+     * @return void
+     */
+    private function createInvoiceLine(Invoice $invoice, array $items): void
+    {
+        foreach ($items as $item) {
+            $response = Http::baseUrl(config('eta.drivers.retail_pro.baseURL'))
+                ->withHeaders([
+                    'Accept' => 'application/json',
+                    'Auth-Session' => $this->auth_session,
+                ])
+                ->get($item['link'], [
+                    'cols' => '*',
+                ])
+                ->json();
+
+            $invoice->invoiceLines()->create([
+                'uuid' => $response['uuid'],
+                'data' => [
+                    'description' => $response['description'],
+                    'itemType' => $response['itemType'],
+                    'itemCode' => $response['itemCode'],
+                    'unitType' => $response['unitType'],
+                    'quantity' => $item['quantity'],
+                    'unitValue' => [
+                        'currencySold' => 'EGP',
+                        'amountEGP' => $response['unitValue'],
+                        'amountSold' => $response['unitValue'],
+                        'currencyExchangeRate' => 0,
+                    ],
+                    'salesTotal' => $item['cost'],
+                    'total' => $item['cost'],
+                    'valueDifference' => $response['valueDifference'],
+                    'totalTaxableFees' => $response['totalTaxableFees'],
+                    'netTotal' => $response['netTotal'],
+                    'itemsDiscount' => $response['itemsDiscount'],
+                ],
+            ]);
+        }
     }
 
     /**

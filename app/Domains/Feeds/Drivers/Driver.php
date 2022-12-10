@@ -2,8 +2,6 @@
 
 namespace App\Domains\Feeds\Drivers;
 
-use App\Domains\Invoice\Models\Invoice;
-
 abstract class Driver
 {
     /**
@@ -12,12 +10,4 @@ abstract class Driver
      * @return void
      */
     abstract public function run(): void;
-
-    /**
-     * Create a new invoice.
-     *
-     * @param  array  $data
-     * @return Invoice
-     */
-    abstract public function create(array $data): Invoice;
 }
