@@ -39,11 +39,11 @@ class RetailPro extends Driver
             ->throw()
             ->json();
 
-        if (count($response->get('errors', []))) {
+        if (count($response['errors'])) {
             throw new InvalidArgumentException($response['errors'][0]['errormsg'] ?? 'Fatal error');
         }
 
-        foreach ($response->get('data', []) as $invoice) {
+        foreach ($response as $invoice) {
             if ($invoice['status'] !== 4) {
                 return;
             }
