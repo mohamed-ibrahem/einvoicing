@@ -41,15 +41,11 @@ class RetailPro extends Driver
             ->throw()
             ->json();
 
-        if (count($response['errors'])) {
+        if (isset($response['errors'])) {
             throw new InvalidArgumentException($response['errors'][0]['errormsg'] ?? 'Fatal error');
         }
 
         foreach ($response as $invoice) {
-            if ($invoice['status'] !== 4) {
-                return;
-            }
-
             $this->create($invoice);
         }
     }
@@ -62,6 +58,10 @@ class RetailPro extends Driver
      */
     public function create(array $data): Invoice
     {
+        if (! is_null($invoice = Invoice::where('uuid', $data['sid'])->first())) {
+            return $invoice;
+        }
+
         $invoice = DB::transaction(function () use ($data): Invoice {
             $invoice = Invoice::create([
                 'uuid' => $data['sid'],
@@ -80,9 +80,9 @@ class RetailPro extends Driver
                         'type' => 'B',
                         'address' => [
                             'country' => $data['bt_country'] ?? 'EG',
-                            'regionCity' => $data['bt_address_line2'],
-                            'governate' => $data['bt_address_line1'],
-                            'street' => $data['bt_address_line3'],
+                            'regionCity' => $data['bt_address_line2'] ?? 'Cairo',
+                            'governate' => $data['bt_address_line1'] ?? 'Cairo',
+                            'street' => $data['bt_address_line3'] ?? 'Not available',
                             'buildingNumber' => 0,
                             'postalCode' => $data['bt_postal_code'],
                             'floor' => 0,
@@ -125,23 +125,23 @@ class RetailPro extends Driver
             $invoice->invoiceLines()->create([
                 'uuid' => $response['uuid'],
                 'data' => [
-                    'description' => $response['description'],
-                    'itemType' => $response['itemType'],
-                    'itemCode' => $response['itemCode'],
-                    'unitType' => $response['unitType'],
+                    'description' => $response['item_description1'].' '.$response['item_description2'],
+                    'itemType' => $response['item_type'],
+                    'itemCode' => 'GS1',
+                    'unitType' => 'kg',
                     'quantity' => $item['quantity'],
                     'unitValue' => [
                         'currencySold' => 'EGP',
-                        'amountEGP' => $response['unitValue'],
-                        'amountSold' => $response['unitValue'],
+                        'amountEGP' => $response['price'],
+                        'amountSold' => $response['price'],
                         'currencyExchangeRate' => 0,
                     ],
-                    'salesTotal' => $item['cost'],
-                    'total' => $item['cost'],
-                    'valueDifference' => $response['valueDifference'],
-                    'totalTaxableFees' => $response['totalTaxableFees'],
-                    'netTotal' => $response['netTotal'],
-                    'itemsDiscount' => $response['itemsDiscount'],
+                    'salesTotal' => $response['price'],
+                    'total' => $response['price'],
+                    'valueDifference' => 0,
+                    'totalTaxableFees' => $response['original_tax_amount'],
+                    'netTotal' => $response['price'],
+                    'itemsDiscount' => 0,
                 ],
             ]);
         }

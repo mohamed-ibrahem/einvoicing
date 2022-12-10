@@ -18,7 +18,7 @@ class InvoiceLine
      * @param  string  $netTotal Total amount for the invoice line after applying discount.
      * @param  string  $itemsDiscount Non-taxable items discount.
      * @param  Discount|null  $discount The structure defining the discount applied on a single unit sold.
-     * @param  TaxableItem|null  $taxableItems List of taxable items. Can have zero or more of supported tax items below from the list of all tax types including VAT, WHT and table tax, local authority fees (municipality), development.
+     * @param  TaxableItem[]|null  $taxableItems List of taxable items. Can have zero or more of supported tax items below from the list of all tax types including VAT, WHT and table tax, local authority fees (municipality), development.
      * @param  string|null  $internalCode Internal code used for the product being sold – can be used to simplify references back to existing solution.
      */
     public function __construct(
