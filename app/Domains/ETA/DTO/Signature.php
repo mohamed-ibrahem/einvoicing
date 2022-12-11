@@ -5,8 +5,8 @@ namespace App\Domains\ETA\DTO;
 class Signature
 {
     /**
-     * @param  string|null  $type Type of the signature: Issuer (I), ServiceProvider (S).
-     * @param  string|null  $value Signature value that contains CADES-BES structure containing signer certificate, hash value signed and actual signature value.
+     * @param  string|null  $type
+     * @param  string|null  $value
      */
     public function __construct(
         public readonly ?string $type,

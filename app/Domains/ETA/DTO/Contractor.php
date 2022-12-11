@@ -2,15 +2,17 @@
 
 namespace App\Domains\ETA\DTO;
 
-class Discount
+class Contractor
 {
     /**
-     * @param  string|null  $discount
+     * @param  string|null  $name
      * @param  string|null  $amount
+     * @param  string|null  $rate
      */
     public function __construct(
-        public readonly ?string $discount,
+        public readonly ?string $name,
         public readonly ?string $amount,
+        public readonly ?string $rate,
     ) {
         //
     }

@@ -5,10 +5,10 @@ namespace App\Domains\ETA\DTO;
 class Issuer
 {
     /**
-     * @param  string|null  $id Registration number. For business in Egypt must be registration number.
-     * @param  string|null  $name Registration name of the company.
-     * @param  string|null  $type Type of the issuer - supported values - B for business in Egypt, P for natural person, F for foreigner. Note that P and F are reserved values for future use.
-     * @param  Address|null  $address Address structure of the issuer branch including branch code.
+     * @param  string|null  $id
+     * @param  string|null  $name
+     * @param  string|null  $type
+     * @param  Address|null  $address
      */
     public function __construct(
         public readonly ?string $id = '0',

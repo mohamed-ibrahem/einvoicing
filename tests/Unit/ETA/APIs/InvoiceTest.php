@@ -18,15 +18,11 @@ class InvoiceTest extends TestCase
     {
         Http::fake([
             '/connect/token' => fn () => AuthResponses::successResponse(),
-            '/documentsubmissions' => fn () => InvoiceResponses::successResponse(),
         ]);
 
-        $invoice = new DTO\Invoice(
-            new DTO\Issuer(),
-            new DTO\Receiver(),
-            now()->toDateTimeLocalString(),
-            123,
-            fake()->randomNumber(),
+        $invoice = new DTO\Receipt(
+
+            now()->toDateTimeLocalString()
         );
 
         try {

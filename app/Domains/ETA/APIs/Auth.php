@@ -28,14 +28,12 @@ class Auth extends Api
                 'grant_type' => 'client_credentials',
                 'client_id' => config('eta.client_id'),
                 'client_secret' => config('eta.client_secret'),
-                'scope' => '',
             ]);
 
         return new DTO\Auth(
             $response['access_token'],
             $response['token_type'],
             $response['expires_in'],
-            $response['scope'],
         );
     }
 }

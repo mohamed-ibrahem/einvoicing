@@ -100,9 +100,9 @@ abstract class Api
     {
         $response = $this->http
             ->post($url, $data)
-            ->json();
+           ->json();
 
-        $this->handleError($response);
+//        $this->handleError($response);
 
         return $response;
     }

@@ -2,15 +2,15 @@
 
 namespace App\Domains\ETA\DTO;
 
-class Discount
+class Beneficiary
 {
     /**
-     * @param  string|null  $discount
      * @param  string|null  $amount
+     * @param  string|null  $rate
      */
     public function __construct(
-        public readonly ?string $discount,
         public readonly ?string $amount,
+        public readonly ?string $rate,
     ) {
         //
     }

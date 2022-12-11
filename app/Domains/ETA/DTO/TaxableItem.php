@@ -5,10 +5,10 @@ namespace App\Domains\ETA\DTO;
 class TaxableItem
 {
     /**
-     * @param  string|null  $taxType Type of tax applied - from the list of approved tax type codes. The TaxType needs to be unique across the invoice line (no VAT twice in one invoice line), TaxType is from the list of supported tax types.
-     * @param  string|null  $amount Amount of the tax applied – tax type defined type of tax applies to support different taxes that are possible depending on the type of sales, customer etc. Value with the precision of 5
-     * @param  string|null  $subType Subtype of the tax type that might mean exemption rate is applied or specific rate linked to product type being sold is applied.
-     * @param  string|null  $rate Tax rate applied for the invoice line. Value from 0 to 100.
+     * @param  string|null  $taxType
+     * @param  string|null  $amount
+     * @param  string|null  $subType
+     * @param  string|null  $rate
      */
     public function __construct(
         public readonly ?string $taxType,

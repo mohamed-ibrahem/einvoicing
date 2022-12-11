@@ -125,23 +125,33 @@ class RetailPro extends Driver
             $invoice->invoiceLines()->create([
                 'uuid' => $response['sid'],
                 'data' => [
-                    'description' => $response['item_description1'].' '.$response['item_description2'],
-                    'itemType' => $response['item_type'],
-                    'itemCode' => 'GS1',
-                    'unitType' => 'kg',
+                    'internalCode' => $response['sid'],
+                    'description' => $response['item_description1'],
+                    'itemType' => $itemType,
+                    'itemCode' => $text6,
+                    'unitType' => $unitType,
                     'quantity' => $item['quantity'],
+                    'netTotal' => $response['price'],
+                    'salesTotal' => $response['price'],
+                    'total' => $response['price'],
+                    'itemsDiscount' => [],
+                    'taxableItems' => [
+                        [
+                            'taxType' => 'T1',
+                            'subType' => 'V009',
+                            'amount' => 0,
+                            'rate' => 0,
+                            'taxTypeName' => '',
+                            'sign' => 1,
+                            'exchangeRate' => 0,
+                        ],
+                    ],
                     'unitValue' => [
                         'currencySold' => 'EGP',
                         'amountEGP' => $response['price'],
                         'amountSold' => $response['price'],
                         'currencyExchangeRate' => 0,
                     ],
-                    'salesTotal' => $response['price'],
-                    'total' => $response['price'],
-                    'valueDifference' => 0,
-                    'totalTaxableFees' => $response['original_tax_amount'],
-                    'netTotal' => $response['price'],
-                    'itemsDiscount' => 0,
                 ],
             ]);
         }
