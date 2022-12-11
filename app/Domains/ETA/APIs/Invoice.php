@@ -5,6 +5,7 @@ namespace App\Domains\ETA\APIs;
 use App\Domains\ETA\DTO;
 use App\Domains\ETA\Exceptions\BadRequestException;
 use Closure;
+use JsonException;
 
 class Invoice extends Api
 {
@@ -14,6 +15,7 @@ class Invoice extends Api
      * @return void
      *
      * @throws BadRequestException
+     * @throws JsonException
      */
     public function submit(DTO\Invoice $invoice, Closure $callback): void
     {
@@ -23,7 +25,7 @@ class Invoice extends Api
             ->withToken($auth->token, $auth->tokenType)
             ->post('/documentsubmissions', [
                 'documents' => [
-                    $invoice,
+                    $invoice->toArray(),
                 ],
             ]);
 

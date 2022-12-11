@@ -2,9 +2,11 @@
 
 namespace App\Domains\ETA\DTO;
 
+use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Contracts\Support\Jsonable;
 use JsonException;
 
-abstract class Document
+abstract class Document implements Arrayable, Jsonable
 {
     /**
      * Document type name. Must be i for invoice.
@@ -82,11 +84,26 @@ abstract class Document
     }
 
     /**
-     * Get Document As Array
+     * Get the document as array.
+     *
+     * @return array
      *
      * @throws JsonException
      */
-    public function toArray()
+    public function toArray(): array
+    {
+        return array_filter($this->toJson());
+    }
+
+    /**
+     * Get the document as json array.
+     *
+     * @param  int  $options
+     * @return array
+     *
+     * @throws JsonException
+     */
+    public function toJson($options = 0): array
     {
         return json_decode(json_encode($this, JSON_THROW_ON_ERROR), true, 512, JSON_THROW_ON_ERROR);
     }
