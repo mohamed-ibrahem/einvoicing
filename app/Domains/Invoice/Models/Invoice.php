@@ -56,7 +56,7 @@ class Invoice extends Model
 
     public function saveResponse($type, $data): void
     {
-        $responses = $this->response;
+        $responses = $this->getData('payload', [], 'response');
 
         $status = match ($type) {
             'error' => false,
