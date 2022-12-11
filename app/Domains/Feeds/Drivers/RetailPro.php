@@ -123,7 +123,7 @@ class RetailPro extends Driver
                 ->json();
 
             $invoice->invoiceLines()->create([
-                'uuid' => $response['uuid'],
+                'uuid' => $response['sid'],
                 'data' => [
                     'description' => $response['item_description1'].' '.$response['item_description2'],
                     'itemType' => $response['item_type'],

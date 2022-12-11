@@ -216,11 +216,15 @@ class SubmitInvoiceToETA implements ShouldQueue
      * @param  InvoiceModel  $invoice
      * @return DTO\TaxTotal[]
      */
-    private function getTaxTotals(InvoiceModel $invoice): array
+    private function getTaxTotals(InvoiceModel $invoice): ?array
     {
+        if (! $invoice->data->has('taxTotals')) {
+            return null;
+        }
+
         return array_map(
             static fn ($tax) => new DTO\TaxTotal($tax['taxType'], $tax['amount']),
-            $invoice->getData('taxTotals')
+            $invoice->getData('taxTotals', [])
         );
     }
 }
