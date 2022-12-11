@@ -20,8 +20,6 @@ class SubmitInvoiceAction extends Action
         /** @var Invoice $model */
         $model = $this->record;
 
-        $this->visible(auth()->user()?->can('update', $model));
-
         $this->label(__('Submit'));
 
         $this->requiresConfirmation();

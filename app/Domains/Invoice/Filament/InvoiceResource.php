@@ -9,6 +9,7 @@ use App\Domains\Invoice\Filament\InvoiceResource\Actions\SubmitInvoiceAction;
 use App\Domains\Invoice\Filament\InvoiceResource\Pages;
 use App\Domains\Invoice\Filament\InvoiceResource\RelationManagers\InvoiceLinesRelationManager;
 use App\Domains\Invoice\Models\Invoice;
+use Exception;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Repeater;
@@ -274,6 +275,9 @@ class InvoiceResource extends Resource
             ]);
     }
 
+    /**
+     * @throws Exception
+     */
     public static function table(Table $table): Table
     {
         return $table
