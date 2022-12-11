@@ -164,7 +164,7 @@ class SubmitInvoiceToETA implements ShouldQueue
                     $tax['amount'],
                     $tax['subType'],
                     $tax['rate'],
-                ), $model->getData('taxableItems')),
+                ), $model->getData('taxableItems', [])),
                 $model->getData('internalCode'),
             )
         )->toArray();
