@@ -18,7 +18,9 @@ class SubmitInvoiceAction extends Action
         parent::setUp();
 
         /** @var Invoice $model */
-        $model = $this->record;
+        $model = $this->getRecord();
+
+        $this->visible(auth()->user()?->can('update', $model));
 
         $this->label(__('Submit'));
 

@@ -27,7 +27,7 @@ class InvoicePolicy
 
     public function update(User $user, Invoice $invoice): bool
     {
-        return true;
+        return ! $invoice->getData('status', false, 'response');
     }
 
     public function delete(User $user, Invoice $invoice): bool
