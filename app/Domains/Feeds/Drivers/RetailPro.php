@@ -120,7 +120,7 @@ class RetailPro extends Driver
                 ->get($item['link'], [
                     'cols' => '*',
                 ])
-                ->json();
+                ->json()[0];
 
             $invoice->invoiceLines()->create([
                 'uuid' => $response['sid'],
