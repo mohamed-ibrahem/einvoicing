@@ -9,6 +9,6 @@ class GetAllController extends Controller
 {
     public function __invoke()
     {
-        Document::limit(10)->get();
+        return Document::with(['items'])->first();
     }
 }
