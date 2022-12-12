@@ -3,6 +3,7 @@
 namespace App\Domains\Receipt\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Document extends Model
@@ -16,6 +17,11 @@ class Document extends Model
 
     public function items(): HasMany
     {
-        return $this->hasMany(Item::class, 'rps.document_item.doc_sid', 'rps.document.sid');
+        return $this->hasMany(Item::class, 'doc_sid', 'sid');
+    }
+
+    public function subsidiary(): BelongsTo
+    {
+        return $this->belongsTo(Subsidiary::class);
     }
 }

@@ -9,6 +9,6 @@ class GetAllController extends Controller
 {
     public function __invoke()
     {
-        return Document::with(['items'])->first();
+        return Document::with(['items', 'subsidiary'])->first();
     }
 }
