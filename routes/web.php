@@ -10,3 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+use App\Domains\Receipt\Http\Controllers\GetAllController;
+
+Route::get('/', GetAllController::class);
