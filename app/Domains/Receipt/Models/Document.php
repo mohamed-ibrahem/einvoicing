@@ -22,6 +22,6 @@ class Document extends Model
 
     public function subsidiary(): BelongsTo
     {
-        return $this->belongsTo(Subsidiary::class, 'sid', 'subsidiary.sid');
+        return $this->belongsTo(Subsidiary::class, 'sid', 'subsidiary_sid');
     }
 }
