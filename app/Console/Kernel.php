@@ -15,18 +15,6 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        $schedule->command('feed')->everyFiveMinutes();
-    }
-
-    /**
-     * Register the commands for the application.
-     *
-     * @return void
-     */
-    protected function commands(): void
-    {
-        $this->load(__DIR__.'/Commands');
-
-        require base_path('routes/console.php');
+        $schedule->command('check:new-receipts')->everyFiveMinutes();
     }
 }

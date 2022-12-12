@@ -7,7 +7,7 @@ return [
 
     'client_secret' => env('ETA_CLIENT_SECRET'),
 
-    'invoices_adapter' => env('ETA_INVOICES_ADAPTER', 'retail_pro'),
+    'invoices_adapter' => env('ETA_INVOICES_ADAPTER', 'database'),
 
     'drivers' => [
         'retail_pro' => [

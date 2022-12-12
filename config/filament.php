@@ -1,5 +1,7 @@
 <?php
 
+use Filament\AvatarProviders\UiAvatarsProvider;
+use Filament\Http\Livewire\Auth\Login;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Http\Middleware\MirrorConfigToSubpackages;
@@ -87,7 +89,7 @@ return [
     'auth' => [
         'guard' => env('FILAMENT_AUTH_GUARD', 'web'),
         'pages' => [
-            'login' => \Filament\Http\Livewire\Auth\Login::class,
+            'login' => Login::class,
         ],
     ],
 
@@ -102,8 +104,8 @@ return [
     */
 
     'pages' => [
-        'namespace' => 'App\\Filament\\Pages',
-        'path' => app_path('Filament/Pages'),
+        'namespace' => 'App\\Domains\\Filament\\Pages',
+        'path' => app_path('Domains/Filament/Pages'),
         'register' => [
             Pages\Dashboard::class,
         ],
@@ -120,8 +122,8 @@ return [
     */
 
     'resources' => [
-        'namespace' => 'App\\Filament\\Resources',
-        'path' => app_path('Filament/Resources'),
+        'namespace' => 'App\\Domains\\Filament\\Resources',
+        'path' => app_path('Domains/Filament/Resources'),
         'register' => [],
     ],
 
@@ -136,8 +138,8 @@ return [
     */
 
     'widgets' => [
-        'namespace' => 'App\\Filament\\Widgets',
-        'path' => app_path('Filament/Widgets'),
+        'namespace' => 'App\\Domains\\Filament\\Widgets',
+        'path' => app_path('Domains/Filament/Widgets'),
         'register' => [
             Widgets\AccountWidget::class,
         ],
@@ -154,8 +156,8 @@ return [
     */
 
     'livewire' => [
-        'namespace' => 'App\\Filament',
-        'path' => app_path('Filament'),
+        'namespace' => 'App\\Domains\\Filament',
+        'path' => app_path('Domains/Filament'),
     ],
 
     /*
@@ -273,7 +275,7 @@ return [
     |
     */
 
-    'default_avatar_provider' => \Filament\AvatarProviders\UiAvatarsProvider::class,
+    'default_avatar_provider' => UiAvatarsProvider::class,
 
     /*
     |--------------------------------------------------------------------------
